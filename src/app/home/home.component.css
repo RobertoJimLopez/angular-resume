@@ -1,0 +1,37 @@
+.presentation {
+  font-family: Barlow;
+  padding-left: 200px;
+  padding-top: 200px;
+  width: 100vw;
+  display: inline-table;
+}
+
+.presentation .name {
+  font-size: 70px;
+  color: #363945;
+  height: 70px;
+  font-weight: 700;
+}
+.presentation .subtitle {
+  font-size: 25px;
+  font-weight: 500;
+  color: dimgray;
+  margin-top: 10px;
+}
+
+.presentation .subtitle .developer {
+  float: left;
+  margin-left: 10px;
+}
+
+.presentation .letter {
+  width: 35vw;
+  height: auto;
+  margin-top: 150px;
+  color: #363945;
+  font-size: 20px;
+}
+
+.tw {
+  float: left;
+}

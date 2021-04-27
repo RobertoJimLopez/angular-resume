@@ -1,0 +1,6 @@
+.test {
+  height: 500px;
+  width: 100vw;
+  display: inline-table;
+  background-color: red;
+}

@@ -1,0 +1,42 @@
+.site-header {
+  width: 100vw;
+  height: 70px;
+  position: fixed;
+  top: 0;
+}
+
+.site-header .navigation {
+  float: right;
+  margin-right: 150px;
+  margin-top: 10px;
+}
+
+.site-header .navigation .button {
+  float: left;
+  padding: 10px 35px;
+  color: #363945;
+  font-size: 22px;
+  font-family: Barlow Condensed;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.site-header .navigation .button:hover {
+  cursor: pointer;
+  color: black;
+  text-shadow: 0px 0px 1px rgb(71, 71, 71);
+  user-select: none;
+}
+
+.site-header .navigation .hover-copy {
+  float: left;
+  padding: 10px 35px;
+  font-size: 22px;
+  font-family: Barlow Condensed;
+  font-weight: 300;
+  letter-spacing: 2px;
+  cursor: pointer;
+  color: black;
+  text-shadow: 0px 0px 1px rgb(71, 71, 71);
+  user-select: none;
+}
