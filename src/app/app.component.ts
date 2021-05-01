@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
   componentRef: any;
   containerRef: any;
   homeButton: any;
-  clientWidth: number | any;
 
 
   scrollLeftVal = -1;
@@ -42,7 +41,6 @@ export class AppComponent implements OnInit {
 
     if (mainElement != null && currWidth != null) {
       mainElement.style.width = currWidth + 50 + "px";
-      this.clientWidth = currWidth;
     }
 
     if (homeButton != null) {
@@ -75,8 +73,7 @@ export class AppComponent implements OnInit {
     }
 
     if (parentElement != null) {
-      let delta: number; 
-      this.clientWidth == null ? delta = 50 : delta = this.clientWidth/20;
+      const delta = 50; 
       event.deltaY > 0 ? parentElement.scrollLeft += event.deltaY + delta : parentElement.scrollLeft += event.deltaY - 1 * delta;
 
       this.scrollLeftVal = parentElement.scrollLeft;
