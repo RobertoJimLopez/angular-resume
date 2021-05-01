@@ -1,22 +1,22 @@
 .presentation {
   font-family: Barlow;
-  padding-left: 10vw;
-  padding-top: 20vh;
+  padding-left: 200px;
+  padding-top: 200px;
   width: 100vw;
   display: inline-table;
 }
 
 .presentation .name {
-  font-size: 7vh;
+  font-size: 70px;
   color: #363945;
-  height: 7vh;
+  height: 70px;
   font-weight: 700;
 }
 .presentation .subtitle {
-  font-size: 2.5vh;
+  font-size: 25px;
   font-weight: 500;
   color: dimgray;
-  margin-top: 1vh;
+  margin-top: 10px;
 }
 
 .presentation .subtitle .developer {
@@ -27,9 +27,9 @@
 .presentation .letter {
   width: 35vw;
   height: auto;
-  margin-top: 15vh;
+  margin-top: 150px;
   color: #363945;
-  font-size: 2vh;
+  font-size: 20px;
 }
 
 .tw {

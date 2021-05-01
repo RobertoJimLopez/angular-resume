@@ -6,8 +6,8 @@
 }
 .arrow span{
     float: left;
-    width: 1vw;
-    height: 1vw;
+    width: 20px;
+    height: 20px;
     border-bottom: 5px solid #06A8FF;
     border-right: 5px solid #06A8FF;
     transform: rotate(-45deg);
