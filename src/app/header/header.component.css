@@ -1,21 +1,21 @@
 .site-header {
   width: 100vw;
-  height: 70px;
+  height: 7vh;
   position: fixed;
   top: 0;
 }
 
 .site-header .navigation {
   float: right;
-  margin-right: 150px;
-  margin-top: 10px;
+  margin-right: 10vw;
+  margin-top: 1vh;
 }
 
 .site-header .navigation .button {
   float: left;
-  padding: 10px 35px;
+  padding: 1vh 2vw;
   color: #363945;
-  font-size: 22px;
+  font-size: 2.2vh;
   font-family: Barlow Condensed;
   font-weight: 300;
   letter-spacing: 2px;
@@ -30,8 +30,8 @@
 
 .site-header .navigation .hover-copy {
   float: left;
-  padding: 10px 35px;
-  font-size: 22px;
+  padding: 1vh 2vw;
+  font-size: 2.2vh;
   font-family: Barlow Condensed;
   font-weight: 300;
   letter-spacing: 2px;
