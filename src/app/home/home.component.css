@@ -1,37 +1,82 @@
-.presentation {
-  font-family: Barlow;
-  padding-left: 10vw;
-  padding-top: 20vh;
-  width: 100vw;
-  display: inline-table;
+/* Desktops and laptops ----------- */
+@media only screen and (min-width: 850px) {
+  .presentation {
+    font-family: Barlow;
+    padding-left: 10vw;
+    padding-top: 20vh;
+    width: 100vw;
+    display: inline-table;
+  }
+  
+  .presentation .name {
+    font-size: 7vh;
+    color: #363945;
+    height: 7vh;
+    font-weight: 700;
+  }
+  .presentation .subtitle {
+    font-size: 2.5vh;
+    font-weight: 500;
+    color: dimgray;
+    margin-top: 1vh;
+  }
+  
+  .presentation .subtitle .developer {
+    float: left;
+    margin-left: 10px;
+  }
+  
+  .presentation .letter {
+    width: 35vw;
+    height: auto;
+    margin-top: 15vh;
+    color: #363945;
+    font-size: 2vh;
+  }
+  
+  .tw {
+    float: left;
+  }
 }
 
-.presentation .name {
-  font-size: 7vh;
-  color: #363945;
-  height: 7vh;
-  font-weight: 700;
-}
-.presentation .subtitle {
-  font-size: 2.5vh;
-  font-weight: 500;
-  color: dimgray;
-  margin-top: 1vh;
+/* mobiles (landscape and portrait) */
+@media only screen and (max-width: 850px) {
+  .presentation {
+    font-family: Barlow;
+    padding-left: 10vw;
+    padding-top: 15vh;
+    width: 100vw;
+    display: inline-table;
+  }
+  
+  .presentation .name {
+    font-size: 30px;
+    color: #363945;
+    height: 28px;
+    font-weight: 700;
+  }
+  .presentation .subtitle {
+    font-size: 18px;
+    font-weight: 500;
+    color: dimgray;
+    margin-top: 1vh;
+  }
+  
+  .presentation .subtitle .developer {
+    float: left;
+    margin-left: 10px;
+  }
+  
+  .presentation .letter {
+    width: 80vw;
+    height: auto;
+    margin-top: 10vh;
+    color: #363945;
+    font-size: 16px;
+  }
+  
+  .tw {
+    float: left;
+  }
 }
 
-.presentation .subtitle .developer {
-  float: left;
-  margin-left: 10px;
-}
-
-.presentation .letter {
-  width: 35vw;
-  height: auto;
-  margin-top: 15vh;
-  color: #363945;
-  font-size: 2vh;
-}
-
-.tw {
-  float: left;
-}
