@@ -11,6 +11,7 @@ import { TestComponent } from './test/test.component';
 import { AngularTypewriterEffectModule } from 'angular-typewriter-effect';
 import { ScrollArrowComponent } from './scroll-arrow/scroll-arrow.component';
 import { AnchorDirective } from './anchor.directive';
+import { AboutMeComponent } from './about-me/about-me.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AnchorDirective } from './anchor.directive';
     HomeComponent,
     TestComponent,
     ScrollArrowComponent,
-    AnchorDirective
+    AnchorDirective,
+    AboutMeComponent
   ],
   imports: [
     BrowserModule,

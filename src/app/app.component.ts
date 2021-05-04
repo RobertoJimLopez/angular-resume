@@ -37,11 +37,10 @@ export class AppComponent implements OnInit {
     let mainElement = document.getElementById("main");
     let homeButton = document.getElementById("home");
     let currWidth = mainElement?.clientWidth;
-    console.log("Test;")
-    console.log(homeButton);
+    console.log(currWidth);
 
     if (mainElement != null && currWidth != null) {
-      mainElement.style.width = currWidth + 50 + "px";
+      mainElement.style.width = currWidth + 1 + "px";
       this.clientWidth = currWidth;
     }
 
@@ -76,7 +75,7 @@ export class AppComponent implements OnInit {
 
     if (parentElement != null) {
       let delta: number; 
-      this.clientWidth == null ? delta = 50 : delta = this.clientWidth/20;
+      this.clientWidth == null ? delta = 50 : delta = this.clientWidth/15;
       event.deltaY > 0 ? parentElement.scrollLeft += event.deltaY + delta : parentElement.scrollLeft += event.deltaY - 1 * delta;
 
       this.scrollLeftVal = parentElement.scrollLeft;
