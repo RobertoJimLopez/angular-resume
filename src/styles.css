@@ -21,3 +21,9 @@ html {
   width: 0px;
   background: transparent; /* make scrollbar transparent */
 }
+
+p {
+  color: #363945;
+  font-size: 2vh;
+  margin-bottom: 3vh;
+}

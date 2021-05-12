@@ -4,7 +4,7 @@
     font-family: Barlow;
     padding-left: 10vw;
     padding-top: 20vh;
-    width: 100vw;
+    width: 90vw;
     display: inline-table;
   }
   
@@ -32,6 +32,14 @@
     margin-top: 15vh;
     color: #363945;
     font-size: 2vh;
+  }
+
+  .presentation .letter .greetings {
+    margin-bottom: 6vh;
+  }
+
+  .presentation .letter .about-me {
+    margin-left: 30px;
   }
   
   .tw {
