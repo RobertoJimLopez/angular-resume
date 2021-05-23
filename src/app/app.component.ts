@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   homeButton: any;
   clientWidth: number | any;
 
-
+  totalWidth = 0;
   scrollLeftVal = -1;
   ended = false;
 
@@ -36,8 +36,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     let mainElement = document.getElementById("main");
     let homeButton = document.getElementById("home");
-    let currWidth = mainElement?.clientWidth;
-    console.log(currWidth);
+    let currWidth;
+
+    if (mainElement != null) {
+      currWidth = mainElement.clientWidth;
+      this.totalWidth = mainElement.clientWidth + 1;
+    }
 
     if (mainElement != null && currWidth != null) {
       mainElement.style.width = currWidth + 1 + "px";
@@ -58,12 +62,13 @@ export class AppComponent implements OnInit {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(anchorItem.component);
 
     const viewContainerRef = this.anchorHost.viewContainerRef;
-    viewContainerRef.clear();
     this.containerRef = viewContainerRef;
 
     const componentRef = viewContainerRef.createComponent<AnchorComponent>(componentFactory);
     this.componentRef = componentRef;
-    componentRef.instance.data = anchorItem.data
+    componentRef.instance.data = anchorItem.data;
+
+    this.totalWidth += this.clientWidth-1;
   }
 
   onWheel(event: WheelEvent): void {
@@ -80,6 +85,7 @@ export class AppComponent implements OnInit {
 
       this.scrollLeftVal = parentElement.scrollLeft;
 
+      // ------------- HIGHLIGHT BUTTONS --------------------------------
       if (this.ended && parentElement.scrollLeft + parentElement.clientWidth >= parentElement.clientWidth * 1.4) {
         if (this.homeButton) {
           this.homeButton.className = "button";
@@ -91,14 +97,21 @@ export class AppComponent implements OnInit {
           this.homeButton.className = "hover-copy";
         }
       }
+      // ------------- HIGHLIGHT BUTTONS --------------------------------
 
-      if (!this.ended && parentElement.scrollLeft + parentElement.clientWidth >= parentElement.clientWidth + 1) {
+      if (!this.ended && parentElement.scrollLeft + parentElement.clientWidth >= this.totalWidth) {
         this.loadComponent();
-        this.ended = true;
-      } else if (this.ended && parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + 1){
+
+        if (this.viewsService.itemEnded()) 
+          this.ended = true;
+
+      } else if (parentElement.scrollLeft <= this.totalWidth - 2 * parentElement.clientWidth){
         if (this.containerRef != null) {
-          this.containerRef.clear();
+          let loadedItems = this.containerRef.length;
+          console.log(loadedItems);
+          this.containerRef.remove(loadedItems - 1);
           this.viewsService.decreaseIndex();
+          this.totalWidth -= this.clientWidth - 1;
         }
         this.ended = false;
       }
