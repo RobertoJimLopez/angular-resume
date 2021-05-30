@@ -330,8 +330,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _anchor_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./anchor-item */ "2G7+");
 /* harmony import */ var _about_me_about_me_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./about-me/about-me.component */ "NgH1");
-/* harmony import */ var _contact_contact_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./contact/contact.component */ "bzTf");
-/* harmony import */ var _experience_experience_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./experience/experience.component */ "1fes");
+/* harmony import */ var _experience_experience_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./experience/experience.component */ "1fes");
+/* harmony import */ var _contact_contact_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./contact/contact.component */ "bzTf");
 
 
 
@@ -343,8 +343,8 @@ class ViewsService {
         this.index = 0;
         this.anchorItems = [
             new _anchor_item__WEBPACK_IMPORTED_MODULE_1__["AnchorItem"](_about_me_about_me_component__WEBPACK_IMPORTED_MODULE_2__["AboutMeComponent"], {}),
-            new _anchor_item__WEBPACK_IMPORTED_MODULE_1__["AnchorItem"](_experience_experience_component__WEBPACK_IMPORTED_MODULE_4__["ExperienceComponent"], {}),
-            new _anchor_item__WEBPACK_IMPORTED_MODULE_1__["AnchorItem"](_contact_contact_component__WEBPACK_IMPORTED_MODULE_3__["ContactComponent"], {})
+            new _anchor_item__WEBPACK_IMPORTED_MODULE_1__["AnchorItem"](_experience_experience_component__WEBPACK_IMPORTED_MODULE_3__["ExperienceComponent"], {}),
+            new _anchor_item__WEBPACK_IMPORTED_MODULE_1__["AnchorItem"](_contact_contact_component__WEBPACK_IMPORTED_MODULE_4__["ContactComponent"], {})
         ];
         this.itemCount = this.anchorItems.length;
         this.itemEnd = false;
@@ -396,9 +396,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _anchor_directive__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./anchor.directive */ "OBt6");
 /* harmony import */ var _views_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views.service */ "QGyZ");
-/* harmony import */ var _header_header_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./header/header.component */ "fECr");
-/* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./home/home.component */ "9vUh");
-/* harmony import */ var _scroll_arrow_scroll_arrow_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./scroll-arrow/scroll-arrow.component */ "URE3");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _header_header_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./header/header.component */ "fECr");
+/* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./home/home.component */ "9vUh");
+/* harmony import */ var _scroll_arrow_scroll_arrow_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./scroll-arrow/scroll-arrow.component */ "URE3");
+
 
 
 
@@ -409,31 +411,43 @@ __webpack_require__.r(__webpack_exports__);
 
 function AppComponent_ng_template_3_Template(rf, ctx) { }
 class AppComponent {
-    constructor(componentFactoryResolver, service) {
+    constructor(componentFactoryResolver, service, router) {
         this.componentFactoryResolver = componentFactoryResolver;
         this.service = service;
+        this.router = router;
         this.currentIndex = -1;
         this.totalWidth = 0;
         this.scrollLeftVal = -1;
         this.ended = false;
+        this.pagesLoaded = 1;
         this.views = service.getViews();
         this.viewsService = service;
     }
     ngOnInit() {
+        this.router.navigate(['/home']);
         let mainElement = document.getElementById("main");
-        let homeButton = document.getElementById("home");
-        let currWidth;
-        if (mainElement != null) {
-            currWidth = mainElement.clientWidth;
-            this.totalWidth = mainElement.clientWidth + 1;
-        }
+        let currWidth = window.innerWidth;
+        this.totalWidth = window.innerWidth + 1;
         if (mainElement != null && currWidth != null) {
             mainElement.style.width = currWidth + 1 + "px";
             this.clientWidth = currWidth;
         }
+        let homeButton = document.getElementById("home");
         if (homeButton != null) {
             homeButton.className = "hover-copy";
             this.homeButton = homeButton;
+        }
+        let aboutMeButton = document.getElementById("about-me");
+        if (aboutMeButton != null) {
+            this.aboutMeButton = aboutMeButton;
+        }
+        let experienceButton = document.getElementById("experience");
+        if (experienceButton != null) {
+            this.experienceButton = experienceButton;
+        }
+        let contactButton = document.getElementById("contact");
+        if (contactButton != null) {
+            this.contactButton = contactButton;
         }
     }
     loadComponent() {
@@ -447,6 +461,7 @@ class AppComponent {
         this.componentRef = componentRef;
         componentRef.instance.data = anchorItem.data;
         this.totalWidth += this.clientWidth - 1;
+        this.pagesLoaded++;
     }
     onWheel(event) {
         let parentElement = event.target;
@@ -459,51 +474,110 @@ class AppComponent {
             event.deltaY > 0 ? parentElement.scrollLeft += event.deltaY + delta : parentElement.scrollLeft += event.deltaY - 1 * delta;
             this.scrollLeftVal = parentElement.scrollLeft;
             // ------------- HIGHLIGHT BUTTONS --------------------------------
-            if (this.ended && parentElement.scrollLeft + parentElement.clientWidth >= parentElement.clientWidth * 1.4) {
+            // ----- HOME BUTTON -----
+            if (parentElement.scrollLeft + parentElement.clientWidth >= parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
                 if (this.homeButton) {
                     this.homeButton.className = "button";
                 }
             }
-            if (this.ended && parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth * 1.4) {
+            if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + +(0.4 * parentElement.clientWidth)) {
                 if (this.homeButton) {
                     this.homeButton.className = "hover-copy";
+                    this.router.navigate(['/home']);
                 }
             }
+            // ----- HOME BUTTON -----
+            // ----- ABOUT ME BUTTON -----
+            if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (0.4 * parentElement.clientWidth) ||
+                parentElement.scrollLeft + parentElement.clientWidth >= 2 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+                if (this.aboutMeButton) {
+                    this.aboutMeButton.className = "button";
+                }
+            }
+            if (parentElement.scrollLeft + parentElement.clientWidth > parentElement.clientWidth + (0.4 * parentElement.clientWidth) &&
+                parentElement.scrollLeft + parentElement.clientWidth < 2 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+                if (this.aboutMeButton) {
+                    this.aboutMeButton.className = "hover-copy";
+                    this.router.navigate(['/about-me']);
+                }
+            }
+            // ----- ABOUT ME BUTTON -----
+            // ----- EXPERIENCE BUTTON -----
+            if (parentElement.scrollLeft + parentElement.clientWidth <= 2 * parentElement.clientWidth + (0.4 * parentElement.clientWidth) ||
+                parentElement.scrollLeft + parentElement.clientWidth >= 3 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+                if (this.experienceButton) {
+                    this.experienceButton.className = "button";
+                }
+            }
+            if (parentElement.scrollLeft + parentElement.clientWidth > 2 * parentElement.clientWidth + (0.4 * parentElement.clientWidth) &&
+                parentElement.scrollLeft + parentElement.clientWidth < 3 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+                if (this.experienceButton) {
+                    this.experienceButton.className = "hover-copy";
+                    this.router.navigate(['/experience']);
+                }
+            }
+            // ----- EXPERIENCE BUTTON -----
+            // ----- CONTACT BUTTON -----
+            if (parentElement.scrollLeft + parentElement.clientWidth <= 3 * parentElement.clientWidth + (0.4 * parentElement.clientWidth) ||
+                parentElement.scrollLeft + parentElement.clientWidth >= 4 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+                if (this.contactButton) {
+                    this.contactButton.className = "button";
+                }
+            }
+            if (parentElement.scrollLeft + parentElement.clientWidth > 3 * parentElement.clientWidth + (0.4 * parentElement.clientWidth) &&
+                parentElement.scrollLeft + parentElement.clientWidth < 4 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+                if (this.contactButton) {
+                    this.contactButton.className = "hover-copy";
+                    this.router.navigate(['/contact']);
+                }
+            }
+            // ----- CONTACT BUTTON -----
             // ------------- HIGHLIGHT BUTTONS --------------------------------
             if (!this.ended && parentElement.scrollLeft + parentElement.clientWidth >= this.totalWidth) {
                 this.loadComponent();
                 if (this.viewsService.itemEnded())
                     this.ended = true;
             }
-            else if (parentElement.scrollLeft <= this.totalWidth - 2 * parentElement.clientWidth) {
-                if (this.containerRef != null) {
-                    let loadedItems = this.containerRef.length;
-                    console.log(loadedItems);
-                    this.containerRef.remove(loadedItems - 1);
-                    this.viewsService.decreaseIndex();
-                    this.totalWidth -= this.clientWidth - 1;
-                }
+            else if (parentElement.scrollLeft <= this.totalWidth - 2 * (parentElement.clientWidth - 1)) {
+                this.removeComponent();
                 this.ended = false;
             }
         }
         event.preventDefault();
     }
+    removeComponent() {
+        if (this.containerRef != null) {
+            let loadedItems = this.containerRef.length;
+            if (loadedItems > 0) {
+                this.containerRef.remove(loadedItems - 1);
+                this.viewsService.decreaseIndex();
+                this.totalWidth -= this.clientWidth - 1;
+                this.pagesLoaded--;
+            }
+        }
+    }
+    onResize() {
+        this.clientWidth = window.innerWidth;
+        this.totalWidth = this.pagesLoaded * (window.innerWidth - 1);
+    }
 }
-AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_views_service__WEBPACK_IMPORTED_MODULE_2__["ViewsService"])); };
+AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_views_service__WEBPACK_IMPORTED_MODULE_2__["ViewsService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"])); };
 AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], viewQuery: function AppComponent_Query(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstaticViewQuery"](_anchor_directive__WEBPACK_IMPORTED_MODULE_1__["AnchorDirective"], true);
     } if (rf & 2) {
         let _t;
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.anchorHost = _t.first);
-    } }, inputs: { views: "views", viewsService: "viewsService" }, decls: 5, vars: 0, consts: [["id", "main", 1, "main", 3, "wheel"], ["anchorHost", ""]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+    } }, inputs: { views: "views", viewsService: "viewsService" }, decls: 5, vars: 0, consts: [["id", "main", 1, "main", 3, "wheel", "resize"], [3, "loadComponent", "removeComponent"], ["anchorHost", ""]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("wheel", function AppComponent_Template_div_wheel_0_listener($event) { return ctx.onWheel($event); });
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-header");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("wheel", function AppComponent_Template_div_wheel_0_listener($event) { return ctx.onWheel($event); })("resize", function AppComponent_Template_div_resize_0_listener() { return ctx.onResize(); }, false, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresolveWindow"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "app-header", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("loadComponent", function AppComponent_Template_app_header_loadComponent_1_listener() { return ctx.loadComponent(); })("removeComponent", function AppComponent_Template_app_header_removeComponent_1_listener() { return ctx.removeComponent(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](2, "app-home");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](3, AppComponent_ng_template_3_Template, 0, 0, "ng-template", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](3, AppComponent_ng_template_3_Template, 0, 0, "ng-template", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](4, "app-scroll-arrow");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } }, directives: [_header_header_component__WEBPACK_IMPORTED_MODULE_3__["HeaderComponent"], _home_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"], _anchor_directive__WEBPACK_IMPORTED_MODULE_1__["AnchorDirective"], _scroll_arrow_scroll_arrow_component__WEBPACK_IMPORTED_MODULE_5__["ScrollArrowComponent"]], styles: [".main[_ngcontent-%COMP%] {\r\n  background-color: lightgray;\r\n  height: 100vh;\r\n  display: inline-flex;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsMkJBQTJCO0VBQzNCLGFBQWE7RUFDYixvQkFBb0I7QUFDdEIiLCJmaWxlIjoiYXBwLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubWFpbiB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRncmF5O1xyXG4gIGhlaWdodDogMTAwdmg7XHJcbiAgZGlzcGxheTogaW5saW5lLWZsZXg7XHJcbn0iXX0= */"] });
+    } }, directives: [_header_header_component__WEBPACK_IMPORTED_MODULE_4__["HeaderComponent"], _home_home_component__WEBPACK_IMPORTED_MODULE_5__["HomeComponent"], _anchor_directive__WEBPACK_IMPORTED_MODULE_1__["AnchorDirective"], _scroll_arrow_scroll_arrow_component__WEBPACK_IMPORTED_MODULE_6__["ScrollArrowComponent"]], styles: [".main[_ngcontent-%COMP%] {\r\n  background-color: lightgray;\r\n  height: 100vh;\r\n  display: inline-flex;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsMkJBQTJCO0VBQzNCLGFBQWE7RUFDYixvQkFBb0I7QUFDdEIiLCJmaWxlIjoiYXBwLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubWFpbiB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRncmF5O1xyXG4gIGhlaWdodDogMTAwdmg7XHJcbiAgZGlzcGxheTogaW5saW5lLWZsZXg7XHJcbn0iXX0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -511,7 +585,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
                 templateUrl: './app.component.html',
                 styleUrls: ['./app.component.css']
             }]
-    }], function () { return [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"] }, { type: _views_service__WEBPACK_IMPORTED_MODULE_2__["ViewsService"] }]; }, { views: [{
+    }], function () { return [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"] }, { type: _views_service__WEBPACK_IMPORTED_MODULE_2__["ViewsService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }]; }, { views: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }], viewsService: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
@@ -709,32 +783,178 @@ ContactComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineC
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HeaderComponent", function() { return HeaderComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _views_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../views.service */ "QGyZ");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "tyNb");
+
+
 
 
 class HeaderComponent {
-    constructor() { }
+    constructor(service) {
+        this.service = service;
+        this.loadComponent = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.removeComponent = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.viewsService = service;
+    }
     ngOnInit() {
+        let homeButton = document.getElementById("home");
+        if (homeButton != null) {
+            this.homeButton = homeButton;
+        }
+        let aboutMeButton = document.getElementById("about-me");
+        if (aboutMeButton != null) {
+            this.aboutMeButton = aboutMeButton;
+        }
+        let experienceButton = document.getElementById("experience");
+        if (experienceButton != null) {
+            this.experienceButton = experienceButton;
+        }
+        let contactButton = document.getElementById("contact");
+        if (contactButton != null) {
+            this.contactButton = contactButton;
+        }
+    }
+    onClick(event) {
+        let width = window.innerWidth;
+        let parentElement = event.target;
+        let loadedEvents = this.viewsService.getIndex();
+        while (parentElement != null && parentElement.parentElement != null) {
+            parentElement = parentElement.parentElement;
+        }
+        switch (event.target.id) {
+            case 'home': {
+                if (this.homeButton && this.aboutMeButton && this.experienceButton && this.contactButton) {
+                    this.homeButton.className = "hover-copy";
+                    this.aboutMeButton.className = "button";
+                    this.experienceButton.className = "button";
+                    this.contactButton.className = "button";
+                }
+                if (parentElement.scrollLeft > 0) {
+                    let accumulated = 0;
+                    for (let i = parentElement.scrollLeft; i >= 0; i = i - 0.5) {
+                        accumulated += 0.5;
+                        if (accumulated / width == 1 && accumulated > 0) {
+                            accumulated = 0;
+                            setTimeout(() => { this.removeComponent.next('removeComponent'); }, 1000);
+                        }
+                        setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                    }
+                }
+                break;
+            }
+            case 'about-me': {
+                if (this.homeButton && this.aboutMeButton && this.experienceButton && this.contactButton) {
+                    this.homeButton.className = "button";
+                    this.aboutMeButton.className = "hover-copy";
+                    this.experienceButton.className = "button";
+                    this.contactButton.className = "button";
+                }
+                if (parentElement.scrollLeft > width) {
+                    let accumulated = 0;
+                    for (let i = parentElement.scrollLeft; i >= width; i = i - 0.5) {
+                        accumulated += 0.5;
+                        if (accumulated / width == 1 && accumulated > 0) {
+                            accumulated = 0;
+                            setTimeout(() => { this.removeComponent.next('removeComponent'); }, 1000);
+                        }
+                        setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                    }
+                }
+                else {
+                    if (loadedEvents < 1) {
+                        this.loadComponent.next('loadComponent');
+                    }
+                    for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
+                        setTimeout(() => {
+                            parentElement.scrollLeft = i;
+                        }, 100);
+                    }
+                }
+                break;
+            }
+            case 'experience': {
+                if (this.homeButton && this.aboutMeButton && this.experienceButton && this.contactButton) {
+                    this.homeButton.className = "button";
+                    this.aboutMeButton.className = "button";
+                    this.experienceButton.className = "hover-copy";
+                    this.contactButton.className = "button";
+                }
+                if (parentElement.scrollLeft > 2 * width) {
+                    let accumulated = 0;
+                    for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 0.5) {
+                        accumulated += 0.5;
+                        if (accumulated / width == 1 && accumulated > 0) {
+                            accumulated = 0;
+                            setTimeout(() => { this.removeComponent.next('removeComponent'); }, 1000);
+                        }
+                        setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                    }
+                }
+                else {
+                    if (loadedEvents < 2) {
+                        for (let i = loadedEvents; i < 2; i++) {
+                            this.loadComponent.next('loadComponent');
+                        }
+                    }
+                    for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
+                        setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                    }
+                }
+                break;
+            }
+            case 'contact': {
+                if (this.homeButton && this.aboutMeButton && this.experienceButton && this.contactButton) {
+                    this.homeButton.className = "button";
+                    this.aboutMeButton.className = "button";
+                    this.experienceButton.className = "button";
+                    this.contactButton.className = "hover-copy";
+                }
+                if (parentElement.scrollLeft > 3 * width) {
+                    for (let i = parentElement.scrollLeft; i >= 3 * width; i = i - 0.5) {
+                        setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                    }
+                }
+                else {
+                    if (loadedEvents < 3) {
+                        for (let i = loadedEvents; this.viewsService.getIndex() < 3; i++) {
+                            this.loadComponent.next('loadComponent');
+                        }
+                    }
+                    for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
+                        setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                    }
+                }
+                break;
+            }
+            default: {
+                console.log("nope");
+            }
+        }
     }
 }
-HeaderComponent.ɵfac = function HeaderComponent_Factory(t) { return new (t || HeaderComponent)(); };
-HeaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HeaderComponent, selectors: [["app-header"]], decls: 10, vars: 0, consts: [[1, "site-header"], [1, "navigation"], ["id", "home", 1, "button"], ["id", "about-me", 1, "button"], ["id", "experience", 1, "button"], ["id", "contact", 1, "button"]], template: function HeaderComponent_Template(rf, ctx) { if (rf & 1) {
+HeaderComponent.ɵfac = function HeaderComponent_Factory(t) { return new (t || HeaderComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_views_service__WEBPACK_IMPORTED_MODULE_1__["ViewsService"])); };
+HeaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HeaderComponent, selectors: [["app-header"]], inputs: { viewsService: "viewsService" }, outputs: { loadComponent: "loadComponent", removeComponent: "removeComponent" }, decls: 10, vars: 0, consts: [[1, "site-header"], [1, "navigation"], ["id", "home", "routerLink", "/home", "routerLinkActive", "active", 1, "button", 3, "click"], ["id", "about-me", "routerLink", "/about-me", "routerLinkActive", "active", 1, "button", 3, "click"], ["id", "experience", "routerLink", "/experience", "routerLinkActive", "active", 1, "button", 3, "click"], ["id", "contact", "routerLink", "/contact", "routerLinkActive", "active", 1, "button", 3, "click"]], template: function HeaderComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function HeaderComponent_Template_div_click_2_listener($event) { return ctx.onClick($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, " HOME ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "div", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function HeaderComponent_Template_div_click_4_listener($event) { return ctx.onClick($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5, " ABOUT ME ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "div", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function HeaderComponent_Template_div_click_6_listener($event) { return ctx.onClick($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, " EXPERIENCE ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "div", 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function HeaderComponent_Template_div_click_8_listener($event) { return ctx.onClick($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](9, " CONTACT ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } }, styles: ["@media only screen and (min-width: 850px) {\r\n  .site-header[_ngcontent-%COMP%] {\r\n    width: 100vw;\r\n    height: 7vh;\r\n    position: fixed;\r\n    top: 0;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%] {\r\n    float: right;\r\n    margin-right: 10vw;\r\n    margin-top: 1vh;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%]   .button[_ngcontent-%COMP%] {\r\n    float: left;\r\n    padding: 1vh 2vw;\r\n    color: #363945;\r\n    font-size: 2.2vh;\r\n    font-family: Barlow Condensed;\r\n    font-weight: 300;\r\n    letter-spacing: 2px;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%]   .button[_ngcontent-%COMP%]:hover {\r\n    cursor: pointer;\r\n    color: black;\r\n    text-shadow: 0px 0px 1px rgb(71, 71, 71);\r\n    -webkit-user-select: none;\r\n            user-select: none;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%]   .hover-copy[_ngcontent-%COMP%] {\r\n    float: left;\r\n    padding: 1vh 2vw;\r\n    font-size: 2.2vh;\r\n    font-family: Barlow Condensed;\r\n    font-weight: 300;\r\n    letter-spacing: 2px;\r\n    cursor: pointer;\r\n    color: black;\r\n    text-shadow: 0px 0px 1px rgb(71, 71, 71);\r\n    -webkit-user-select: none;\r\n            user-select: none;\r\n  }\r\n}\r\n\r\n@media only screen and (max-width: 850px) {\r\n  .site-header[_ngcontent-%COMP%] {\r\n    width: 100vw;\r\n    height: 7vh;\r\n    position: fixed;\r\n    top: 0;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%] {\r\n    float: right;\r\n    margin-right: 10vw;\r\n    margin-top: 1vh;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%]   .button[_ngcontent-%COMP%] {\r\n    float: left;\r\n    padding: 1vh 2vw;\r\n    color: #363945;\r\n    font-size: 2.2vh;\r\n    font-family: Barlow Condensed;\r\n    font-weight: 300;\r\n    letter-spacing: 2px;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%]   .button[_ngcontent-%COMP%]:hover {\r\n    cursor: pointer;\r\n    color: black;\r\n    text-shadow: 0px 0px 1px rgb(71, 71, 71);\r\n    -webkit-user-select: none;\r\n            user-select: none;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%]   .hover-copy[_ngcontent-%COMP%] {\r\n    float: left;\r\n    padding: 1vh 2vw;\r\n    font-size: 2.2vh;\r\n    font-family: Barlow Condensed;\r\n    font-weight: 300;\r\n    letter-spacing: 2px;\r\n    cursor: pointer;\r\n    color: black;\r\n    text-shadow: 0px 0px 1px rgb(71, 71, 71);\r\n    -webkit-user-select: none;\r\n            user-select: none;\r\n  }\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImhlYWRlci5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7SUFDRSxZQUFZO0lBQ1osV0FBVztJQUNYLGVBQWU7SUFDZixNQUFNO0VBQ1I7O0VBRUE7SUFDRSxZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLGVBQWU7RUFDakI7O0VBRUE7SUFDRSxXQUFXO0lBQ1gsZ0JBQWdCO0lBQ2hCLGNBQWM7SUFDZCxnQkFBZ0I7SUFDaEIsNkJBQTZCO0lBQzdCLGdCQUFnQjtJQUNoQixtQkFBbUI7RUFDckI7O0VBRUE7SUFDRSxlQUFlO0lBQ2YsWUFBWTtJQUNaLHdDQUF3QztJQUN4Qyx5QkFBaUI7WUFBakIsaUJBQWlCO0VBQ25COztFQUVBO0lBQ0UsV0FBVztJQUNYLGdCQUFnQjtJQUNoQixnQkFBZ0I7SUFDaEIsNkJBQTZCO0lBQzdCLGdCQUFnQjtJQUNoQixtQkFBbUI7SUFDbkIsZUFBZTtJQUNmLFlBQVk7SUFDWix3Q0FBd0M7SUFDeEMseUJBQWlCO1lBQWpCLGlCQUFpQjtFQUNuQjtBQUNGOztBQUVBO0VBQ0U7SUFDRSxZQUFZO0lBQ1osV0FBVztJQUNYLGVBQWU7SUFDZixNQUFNO0VBQ1I7O0VBRUE7SUFDRSxZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLGVBQWU7RUFDakI7O0VBRUE7SUFDRSxXQUFXO0lBQ1gsZ0JBQWdCO0lBQ2hCLGNBQWM7SUFDZCxnQkFBZ0I7SUFDaEIsNkJBQTZCO0lBQzdCLGdCQUFnQjtJQUNoQixtQkFBbUI7RUFDckI7O0VBRUE7SUFDRSxlQUFlO0lBQ2YsWUFBWTtJQUNaLHdDQUF3QztJQUN4Qyx5QkFBaUI7WUFBakIsaUJBQWlCO0VBQ25COztFQUVBO0lBQ0UsV0FBVztJQUNYLGdCQUFnQjtJQUNoQixnQkFBZ0I7SUFDaEIsNkJBQTZCO0lBQzdCLGdCQUFnQjtJQUNoQixtQkFBbUI7SUFDbkIsZUFBZTtJQUNmLFlBQVk7SUFDWix3Q0FBd0M7SUFDeEMseUJBQWlCO1lBQWpCLGlCQUFpQjtFQUNuQjtBQUNGIiwiZmlsZSI6ImhlYWRlci5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiQG1lZGlhIG9ubHkgc2NyZWVuIGFuZCAobWluLXdpZHRoOiA4NTBweCkge1xyXG4gIC5zaXRlLWhlYWRlciB7XHJcbiAgICB3aWR0aDogMTAwdnc7XHJcbiAgICBoZWlnaHQ6IDd2aDtcclxuICAgIHBvc2l0aW9uOiBmaXhlZDtcclxuICAgIHRvcDogMDtcclxuICB9XHJcblxyXG4gIC5zaXRlLWhlYWRlciAubmF2aWdhdGlvbiB7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDEwdnc7XHJcbiAgICBtYXJnaW4tdG9wOiAxdmg7XHJcbiAgfVxyXG5cclxuICAuc2l0ZS1oZWFkZXIgLm5hdmlnYXRpb24gLmJ1dHRvbiB7XHJcbiAgICBmbG9hdDogbGVmdDtcclxuICAgIHBhZGRpbmc6IDF2aCAydnc7XHJcbiAgICBjb2xvcjogIzM2Mzk0NTtcclxuICAgIGZvbnQtc2l6ZTogMi4ydmg7XHJcbiAgICBmb250LWZhbWlseTogQmFybG93IENvbmRlbnNlZDtcclxuICAgIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgICBsZXR0ZXItc3BhY2luZzogMnB4O1xyXG4gIH1cclxuXHJcbiAgLnNpdGUtaGVhZGVyIC5uYXZpZ2F0aW9uIC5idXR0b246aG92ZXIge1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgY29sb3I6IGJsYWNrO1xyXG4gICAgdGV4dC1zaGFkb3c6IDBweCAwcHggMXB4IHJnYig3MSwgNzEsIDcxKTtcclxuICAgIHVzZXItc2VsZWN0OiBub25lO1xyXG4gIH1cclxuXHJcbiAgLnNpdGUtaGVhZGVyIC5uYXZpZ2F0aW9uIC5ob3Zlci1jb3B5IHtcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG4gICAgcGFkZGluZzogMXZoIDJ2dztcclxuICAgIGZvbnQtc2l6ZTogMi4ydmg7XHJcbiAgICBmb250LWZhbWlseTogQmFybG93IENvbmRlbnNlZDtcclxuICAgIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgICBsZXR0ZXItc3BhY2luZzogMnB4O1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgY29sb3I6IGJsYWNrO1xyXG4gICAgdGV4dC1zaGFkb3c6IDBweCAwcHggMXB4IHJnYig3MSwgNzEsIDcxKTtcclxuICAgIHVzZXItc2VsZWN0OiBub25lO1xyXG4gIH1cclxufVxyXG5cclxuQG1lZGlhIG9ubHkgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA4NTBweCkge1xyXG4gIC5zaXRlLWhlYWRlciB7XHJcbiAgICB3aWR0aDogMTAwdnc7XHJcbiAgICBoZWlnaHQ6IDd2aDtcclxuICAgIHBvc2l0aW9uOiBmaXhlZDtcclxuICAgIHRvcDogMDtcclxuICB9XHJcblxyXG4gIC5zaXRlLWhlYWRlciAubmF2aWdhdGlvbiB7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDEwdnc7XHJcbiAgICBtYXJnaW4tdG9wOiAxdmg7XHJcbiAgfVxyXG5cclxuICAuc2l0ZS1oZWFkZXIgLm5hdmlnYXRpb24gLmJ1dHRvbiB7XHJcbiAgICBmbG9hdDogbGVmdDtcclxuICAgIHBhZGRpbmc6IDF2aCAydnc7XHJcbiAgICBjb2xvcjogIzM2Mzk0NTtcclxuICAgIGZvbnQtc2l6ZTogMi4ydmg7XHJcbiAgICBmb250LWZhbWlseTogQmFybG93IENvbmRlbnNlZDtcclxuICAgIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgICBsZXR0ZXItc3BhY2luZzogMnB4O1xyXG4gIH1cclxuXHJcbiAgLnNpdGUtaGVhZGVyIC5uYXZpZ2F0aW9uIC5idXR0b246aG92ZXIge1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgY29sb3I6IGJsYWNrO1xyXG4gICAgdGV4dC1zaGFkb3c6IDBweCAwcHggMXB4IHJnYig3MSwgNzEsIDcxKTtcclxuICAgIHVzZXItc2VsZWN0OiBub25lO1xyXG4gIH1cclxuXHJcbiAgLnNpdGUtaGVhZGVyIC5uYXZpZ2F0aW9uIC5ob3Zlci1jb3B5IHtcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG4gICAgcGFkZGluZzogMXZoIDJ2dztcclxuICAgIGZvbnQtc2l6ZTogMi4ydmg7XHJcbiAgICBmb250LWZhbWlseTogQmFybG93IENvbmRlbnNlZDtcclxuICAgIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgICBsZXR0ZXItc3BhY2luZzogMnB4O1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgY29sb3I6IGJsYWNrO1xyXG4gICAgdGV4dC1zaGFkb3c6IDBweCAwcHggMXB4IHJnYig3MSwgNzEsIDcxKTtcclxuICAgIHVzZXItc2VsZWN0OiBub25lO1xyXG4gIH1cclxufSJdfQ== */"] });
+    } }, directives: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterLink"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterLinkActive"]], styles: ["@media only screen and (min-width: 850px) {\r\n  .site-header[_ngcontent-%COMP%] {\r\n    width: 100vw;\r\n    height: 7vh;\r\n    position: fixed;\r\n    top: 0;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%] {\r\n    float: right;\r\n    margin-right: 10vw;\r\n    margin-top: 1vh;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%]   .button[_ngcontent-%COMP%] {\r\n    float: left;\r\n    padding: 1vh 2vw;\r\n    color: #363945;\r\n    font-size: 2.2vh;\r\n    font-family: Barlow Condensed;\r\n    font-weight: 300;\r\n    letter-spacing: 2px;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%]   .button[_ngcontent-%COMP%]:hover {\r\n    cursor: pointer;\r\n    color: black;\r\n    text-shadow: 0px 0px 1px rgb(71, 71, 71);\r\n    -webkit-user-select: none;\r\n            user-select: none;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%]   .hover-copy[_ngcontent-%COMP%] {\r\n    float: left;\r\n    padding: 1vh 2vw;\r\n    font-size: 2.2vh;\r\n    font-family: Barlow Condensed;\r\n    font-weight: 300;\r\n    letter-spacing: 2px;\r\n    cursor: pointer;\r\n    color: black;\r\n    text-shadow: 0px 0px 1px rgb(71, 71, 71);\r\n    -webkit-user-select: none;\r\n            user-select: none;\r\n  }\r\n}\r\n\r\n@media only screen and (max-width: 850px) {\r\n  .site-header[_ngcontent-%COMP%] {\r\n    width: 100vw;\r\n    height: 7vh;\r\n    position: fixed;\r\n    top: 0;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%] {\r\n    float: right;\r\n    margin-right: 10vw;\r\n    margin-top: 1vh;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%]   .button[_ngcontent-%COMP%] {\r\n    float: left;\r\n    padding: 1vh 2vw;\r\n    color: #363945;\r\n    font-size: 2.2vh;\r\n    font-family: Barlow Condensed;\r\n    font-weight: 300;\r\n    letter-spacing: 2px;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%]   .button[_ngcontent-%COMP%]:hover {\r\n    cursor: pointer;\r\n    color: black;\r\n    text-shadow: 0px 0px 1px rgb(71, 71, 71);\r\n    -webkit-user-select: none;\r\n            user-select: none;\r\n  }\r\n\r\n  .site-header[_ngcontent-%COMP%]   .navigation[_ngcontent-%COMP%]   .hover-copy[_ngcontent-%COMP%] {\r\n    float: left;\r\n    padding: 1vh 2vw;\r\n    font-size: 2.2vh;\r\n    font-family: Barlow Condensed;\r\n    font-weight: 300;\r\n    letter-spacing: 2px;\r\n    cursor: pointer;\r\n    color: black;\r\n    text-shadow: 0px 0px 1px rgb(71, 71, 71);\r\n    -webkit-user-select: none;\r\n            user-select: none;\r\n  }\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImhlYWRlci5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7SUFDRSxZQUFZO0lBQ1osV0FBVztJQUNYLGVBQWU7SUFDZixNQUFNO0VBQ1I7O0VBRUE7SUFDRSxZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLGVBQWU7RUFDakI7O0VBRUE7SUFDRSxXQUFXO0lBQ1gsZ0JBQWdCO0lBQ2hCLGNBQWM7SUFDZCxnQkFBZ0I7SUFDaEIsNkJBQTZCO0lBQzdCLGdCQUFnQjtJQUNoQixtQkFBbUI7RUFDckI7O0VBRUE7SUFDRSxlQUFlO0lBQ2YsWUFBWTtJQUNaLHdDQUF3QztJQUN4Qyx5QkFBaUI7WUFBakIsaUJBQWlCO0VBQ25COztFQUVBO0lBQ0UsV0FBVztJQUNYLGdCQUFnQjtJQUNoQixnQkFBZ0I7SUFDaEIsNkJBQTZCO0lBQzdCLGdCQUFnQjtJQUNoQixtQkFBbUI7SUFDbkIsZUFBZTtJQUNmLFlBQVk7SUFDWix3Q0FBd0M7SUFDeEMseUJBQWlCO1lBQWpCLGlCQUFpQjtFQUNuQjtBQUNGOztBQUVBO0VBQ0U7SUFDRSxZQUFZO0lBQ1osV0FBVztJQUNYLGVBQWU7SUFDZixNQUFNO0VBQ1I7O0VBRUE7SUFDRSxZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLGVBQWU7RUFDakI7O0VBRUE7SUFDRSxXQUFXO0lBQ1gsZ0JBQWdCO0lBQ2hCLGNBQWM7SUFDZCxnQkFBZ0I7SUFDaEIsNkJBQTZCO0lBQzdCLGdCQUFnQjtJQUNoQixtQkFBbUI7RUFDckI7O0VBRUE7SUFDRSxlQUFlO0lBQ2YsWUFBWTtJQUNaLHdDQUF3QztJQUN4Qyx5QkFBaUI7WUFBakIsaUJBQWlCO0VBQ25COztFQUVBO0lBQ0UsV0FBVztJQUNYLGdCQUFnQjtJQUNoQixnQkFBZ0I7SUFDaEIsNkJBQTZCO0lBQzdCLGdCQUFnQjtJQUNoQixtQkFBbUI7SUFDbkIsZUFBZTtJQUNmLFlBQVk7SUFDWix3Q0FBd0M7SUFDeEMseUJBQWlCO1lBQWpCLGlCQUFpQjtFQUNuQjtBQUNGIiwiZmlsZSI6ImhlYWRlci5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiQG1lZGlhIG9ubHkgc2NyZWVuIGFuZCAobWluLXdpZHRoOiA4NTBweCkge1xyXG4gIC5zaXRlLWhlYWRlciB7XHJcbiAgICB3aWR0aDogMTAwdnc7XHJcbiAgICBoZWlnaHQ6IDd2aDtcclxuICAgIHBvc2l0aW9uOiBmaXhlZDtcclxuICAgIHRvcDogMDtcclxuICB9XHJcblxyXG4gIC5zaXRlLWhlYWRlciAubmF2aWdhdGlvbiB7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDEwdnc7XHJcbiAgICBtYXJnaW4tdG9wOiAxdmg7XHJcbiAgfVxyXG5cclxuICAuc2l0ZS1oZWFkZXIgLm5hdmlnYXRpb24gLmJ1dHRvbiB7XHJcbiAgICBmbG9hdDogbGVmdDtcclxuICAgIHBhZGRpbmc6IDF2aCAydnc7XHJcbiAgICBjb2xvcjogIzM2Mzk0NTtcclxuICAgIGZvbnQtc2l6ZTogMi4ydmg7XHJcbiAgICBmb250LWZhbWlseTogQmFybG93IENvbmRlbnNlZDtcclxuICAgIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgICBsZXR0ZXItc3BhY2luZzogMnB4O1xyXG4gIH1cclxuXHJcbiAgLnNpdGUtaGVhZGVyIC5uYXZpZ2F0aW9uIC5idXR0b246aG92ZXIge1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgY29sb3I6IGJsYWNrO1xyXG4gICAgdGV4dC1zaGFkb3c6IDBweCAwcHggMXB4IHJnYig3MSwgNzEsIDcxKTtcclxuICAgIHVzZXItc2VsZWN0OiBub25lO1xyXG4gIH1cclxuXHJcbiAgLnNpdGUtaGVhZGVyIC5uYXZpZ2F0aW9uIC5ob3Zlci1jb3B5IHtcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG4gICAgcGFkZGluZzogMXZoIDJ2dztcclxuICAgIGZvbnQtc2l6ZTogMi4ydmg7XHJcbiAgICBmb250LWZhbWlseTogQmFybG93IENvbmRlbnNlZDtcclxuICAgIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgICBsZXR0ZXItc3BhY2luZzogMnB4O1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgY29sb3I6IGJsYWNrO1xyXG4gICAgdGV4dC1zaGFkb3c6IDBweCAwcHggMXB4IHJnYig3MSwgNzEsIDcxKTtcclxuICAgIHVzZXItc2VsZWN0OiBub25lO1xyXG4gIH1cclxufVxyXG5cclxuQG1lZGlhIG9ubHkgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA4NTBweCkge1xyXG4gIC5zaXRlLWhlYWRlciB7XHJcbiAgICB3aWR0aDogMTAwdnc7XHJcbiAgICBoZWlnaHQ6IDd2aDtcclxuICAgIHBvc2l0aW9uOiBmaXhlZDtcclxuICAgIHRvcDogMDtcclxuICB9XHJcblxyXG4gIC5zaXRlLWhlYWRlciAubmF2aWdhdGlvbiB7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDEwdnc7XHJcbiAgICBtYXJnaW4tdG9wOiAxdmg7XHJcbiAgfVxyXG5cclxuICAuc2l0ZS1oZWFkZXIgLm5hdmlnYXRpb24gLmJ1dHRvbiB7XHJcbiAgICBmbG9hdDogbGVmdDtcclxuICAgIHBhZGRpbmc6IDF2aCAydnc7XHJcbiAgICBjb2xvcjogIzM2Mzk0NTtcclxuICAgIGZvbnQtc2l6ZTogMi4ydmg7XHJcbiAgICBmb250LWZhbWlseTogQmFybG93IENvbmRlbnNlZDtcclxuICAgIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgICBsZXR0ZXItc3BhY2luZzogMnB4O1xyXG4gIH1cclxuXHJcbiAgLnNpdGUtaGVhZGVyIC5uYXZpZ2F0aW9uIC5idXR0b246aG92ZXIge1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgY29sb3I6IGJsYWNrO1xyXG4gICAgdGV4dC1zaGFkb3c6IDBweCAwcHggMXB4IHJnYig3MSwgNzEsIDcxKTtcclxuICAgIHVzZXItc2VsZWN0OiBub25lO1xyXG4gIH1cclxuXHJcbiAgLnNpdGUtaGVhZGVyIC5uYXZpZ2F0aW9uIC5ob3Zlci1jb3B5IHtcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG4gICAgcGFkZGluZzogMXZoIDJ2dztcclxuICAgIGZvbnQtc2l6ZTogMi4ydmg7XHJcbiAgICBmb250LWZhbWlseTogQmFybG93IENvbmRlbnNlZDtcclxuICAgIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgICBsZXR0ZXItc3BhY2luZzogMnB4O1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgY29sb3I6IGJsYWNrO1xyXG4gICAgdGV4dC1zaGFkb3c6IDBweCAwcHggMXB4IHJnYig3MSwgNzEsIDcxKTtcclxuICAgIHVzZXItc2VsZWN0OiBub25lO1xyXG4gIH1cclxufSJdfQ== */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](HeaderComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -742,7 +962,13 @@ HeaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCo
                 templateUrl: './header.component.html',
                 styleUrls: ['./header.component.css']
             }]
-    }], function () { return []; }, null); })();
+    }], function () { return [{ type: _views_service__WEBPACK_IMPORTED_MODULE_1__["ViewsService"] }]; }, { viewsService: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
+        }], loadComponent: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"]
+        }], removeComponent: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"]
+        }] }); })();
 
 
 /***/ }),
@@ -795,11 +1021,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppRoutingModule", function() { return AppRoutingModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./home/home.component */ "9vUh");
+/* harmony import */ var _about_me_about_me_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./about-me/about-me.component */ "NgH1");
+/* harmony import */ var _contact_contact_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./contact/contact.component */ "bzTf");
+/* harmony import */ var _experience_experience_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./experience/experience.component */ "1fes");
 
 
 
 
-const routes = [];
+
+
+
+
+const routes = [
+    {
+        path: 'home',
+        component: _home_home_component__WEBPACK_IMPORTED_MODULE_2__["HomeComponent"],
+    },
+    {
+        path: 'about-me',
+        component: _about_me_about_me_component__WEBPACK_IMPORTED_MODULE_3__["AboutMeComponent"],
+    },
+    {
+        path: 'experience',
+        component: _experience_experience_component__WEBPACK_IMPORTED_MODULE_5__["ExperienceComponent"],
+    },
+    {
+        path: 'contact',
+        component: _contact_contact_component__WEBPACK_IMPORTED_MODULE_4__["ContactComponent"],
+    }
+];
+_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(routes, { scrollPositionRestoration: 'enabled' });
 class AppRoutingModule {
 }
 AppRoutingModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineNgModule"]({ type: AppRoutingModule });

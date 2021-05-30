@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { AnchorItem } from './anchor-item';
 import { TestComponent } from './test/test.component';
 import { AboutMeComponent } from './about-me/about-me.component';
-import { ContactComponent } from './contact/contact.component';
 import { ExperienceComponent } from './experience/experience.component';
+import { ContactComponent } from './contact/contact.component';
 
 @Injectable({
   providedIn: 'root'
