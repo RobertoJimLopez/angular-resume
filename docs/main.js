@@ -490,11 +490,6 @@ class AppComponent {
         this.viewsService = service;
     }
     ngOnInit() {
-        let url = this.router.url;
-        console.log(url);
-        if (url == '/') {
-            this.location.go('home');
-        }
         let mainElement = document.getElementById("main");
         let currWidth = window.innerWidth;
         this.totalWidth = window.innerWidth + 1;

@@ -41,13 +41,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let url = this.router.url;
-    console.log(url);
-
-    if (url == '/') {
-      this.location.go('home');
-    }
-
     let mainElement = document.getElementById("main");
     let currWidth = window.innerWidth;
 
