@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ComponentFactoryResolver} from '@angular/core';
+import { Location } from '@angular/common';
 
 import { ViewsService } from './views.service'
 
@@ -6,7 +7,7 @@ import { AnchorItem } from './anchor-item';
 import { AnchorDirective } from './anchor.directive';
 import { AnchorComponent } from './anchor.component';
 import { createComponent } from '@angular/compiler/src/core';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -28,18 +29,24 @@ export class AppComponent implements OnInit {
   contactButton: HTMLElement | any;
   clientWidth: number | any;
 
+  loadThreshold = 0.1;
   totalWidth = 0;
   scrollLeftVal = -1;
   ended = false;
   pagesLoaded = 1;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver, private service: ViewsService, private router: Router) {
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private service: ViewsService, private router: Router, private location: Location) {
     this.views = service.getViews();
     this.viewsService = service;
   }
 
   ngOnInit(): void {
-    this.router.navigate(['/home']);
+    let url = this.router.url;
+    console.log(url);
+
+    if (url == '/') {
+      this.location.go('home');
+    }
 
     let mainElement = document.getElementById("main");
     let currWidth = window.innerWidth;
@@ -78,6 +85,7 @@ export class AppComponent implements OnInit {
   }
 
   loadComponent(): void {
+    console.log("loadComponent");
     this.currentIndex = this.viewsService.getIndex();
     const anchorItem = this.views[this.currentIndex];
     this.viewsService.increaseIndex();
@@ -112,13 +120,13 @@ export class AppComponent implements OnInit {
 
       // ------------- HIGHLIGHT BUTTONS --------------------------------
       // ----- HOME BUTTON -----
-      if (parentElement.scrollLeft + parentElement.clientWidth >= parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+      if (parentElement.scrollLeft + parentElement.clientWidth >= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
         if (this.homeButton) {
           this.homeButton.className = "button";
         }
       }
 
-      if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + + (0.4 * parentElement.clientWidth)) {
+      if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
         if (this.homeButton) {
           this.homeButton.className = "hover-copy";
           this.router.navigate(['/home']);
@@ -126,15 +134,15 @@ export class AppComponent implements OnInit {
       }
       // ----- HOME BUTTON -----
       // ----- ABOUT ME BUTTON -----
-      if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (0.4 * parentElement.clientWidth) ||
-        parentElement.scrollLeft + parentElement.clientWidth >= 2 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+      if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
+        parentElement.scrollLeft + parentElement.clientWidth >= 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
         if (this.aboutMeButton) {
           this.aboutMeButton.className = "button";
         }
       }
 
-      if (parentElement.scrollLeft + parentElement.clientWidth > parentElement.clientWidth + (0.4 * parentElement.clientWidth) &&
-          parentElement.scrollLeft + parentElement.clientWidth < 2 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+      if (parentElement.scrollLeft + parentElement.clientWidth > parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
+          parentElement.scrollLeft + parentElement.clientWidth < 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
         if (this.aboutMeButton) {
           this.aboutMeButton.className = "hover-copy";
           this.router.navigate(['/about-me']);
@@ -142,15 +150,15 @@ export class AppComponent implements OnInit {
       }
       // ----- ABOUT ME BUTTON -----
       // ----- EXPERIENCE BUTTON -----
-      if (parentElement.scrollLeft + parentElement.clientWidth <= 2 * parentElement.clientWidth + (0.4 * parentElement.clientWidth) ||
-        parentElement.scrollLeft + parentElement.clientWidth >= 3 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+      if (parentElement.scrollLeft + parentElement.clientWidth <= 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
+        parentElement.scrollLeft + parentElement.clientWidth >= 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
         if (this.experienceButton) {
           this.experienceButton.className = "button";
         }
       }
 
-      if (parentElement.scrollLeft + parentElement.clientWidth > 2 * parentElement.clientWidth + (0.4 * parentElement.clientWidth) &&
-          parentElement.scrollLeft + parentElement.clientWidth < 3 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+      if (parentElement.scrollLeft + parentElement.clientWidth > 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
+          parentElement.scrollLeft + parentElement.clientWidth < 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
         if (this.experienceButton) {
           this.experienceButton.className = "hover-copy";
           this.router.navigate(['/experience']);
@@ -158,15 +166,15 @@ export class AppComponent implements OnInit {
       }
       // ----- EXPERIENCE BUTTON -----
       // ----- CONTACT BUTTON -----
-      if (parentElement.scrollLeft + parentElement.clientWidth <= 3 * parentElement.clientWidth + (0.4 * parentElement.clientWidth) ||
-        parentElement.scrollLeft + parentElement.clientWidth >= 4 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+      if (parentElement.scrollLeft + parentElement.clientWidth <= 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
+        parentElement.scrollLeft + parentElement.clientWidth >= 4 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
         if (this.contactButton) {
           this.contactButton.className = "button";
         }
       }
 
-      if (parentElement.scrollLeft + parentElement.clientWidth > 3 * parentElement.clientWidth + (0.4 * parentElement.clientWidth) &&
-          parentElement.scrollLeft + parentElement.clientWidth < 4 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+      if (parentElement.scrollLeft + parentElement.clientWidth > 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
+          parentElement.scrollLeft + parentElement.clientWidth < 4 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
         if (this.contactButton) {
           this.contactButton.className = "hover-copy";
           this.router.navigate(['/contact']);
@@ -175,7 +183,7 @@ export class AppComponent implements OnInit {
       // ----- CONTACT BUTTON -----
       // ------------- HIGHLIGHT BUTTONS --------------------------------
 
-      if (!this.ended && parentElement.scrollLeft + parentElement.clientWidth >= this.totalWidth) {
+      if (!this.ended && this.viewsService.getIndex() < 3 && parentElement.scrollLeft + parentElement.clientWidth >= this.totalWidth) {
         this.loadComponent();
 
         if (this.viewsService.itemEnded()) 
@@ -204,5 +212,31 @@ export class AppComponent implements OnInit {
   onResize(): void {
     this.clientWidth = window.innerWidth;
     this.totalWidth = this.pagesLoaded * (window.innerWidth - 1);
+  }
+
+  onActivate(event: Event): void {
+    let url = this.router.url;
+    let loadedComponents = this.viewsService.getIndex();
+
+    switch (url) {
+      case '/about-me': {
+        this.loadNComponents(1 - loadedComponents);
+        break;
+      }
+      case '/experience': {
+        this.loadNComponents(2 - loadedComponents);
+        break;
+      }
+      case '/contact': {
+        this.loadNComponents(3 - loadedComponents);
+        break;
+      }
+    }
+  }
+
+  loadNComponents(components: number): void {
+    for (let i = 0; i < components; i++) {
+      this.loadComponent();
+    }
   }
 }

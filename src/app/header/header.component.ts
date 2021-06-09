@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   experienceButton: HTMLElement | any;
   contactButton: HTMLElement | any;
 
-  constructor( private service: ViewsService) {
+  constructor(private service: ViewsService) {
     this.viewsService = service;
   }
 
@@ -48,6 +48,7 @@ export class HeaderComponent implements OnInit {
 
   onClick(event: MouseEvent): void {
     let width = window.innerWidth;
+    console.log(width);
     let parentElement = (<Element>event.target);
     let loadedEvents = this.viewsService.getIndex();
 
@@ -71,10 +72,10 @@ export class HeaderComponent implements OnInit {
 
             if (accumulated / width == 1 && accumulated > 0) {
               accumulated = 0;
-              setTimeout(() =>{this.removeComponent.next('removeComponent');}, 1000);
+              window.setTimeout(() =>{this.removeComponent.next('removeComponent');}, 150);
             }
 
-            setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
           }
         }
         break;
@@ -94,10 +95,10 @@ export class HeaderComponent implements OnInit {
 
             if (accumulated / width == 1 && accumulated > 0) {
               accumulated = 0;
-              setTimeout(() =>{this.removeComponent.next('removeComponent');}, 1000);
+              window.setTimeout(() =>{this.removeComponent.next('removeComponent');}, 150);
             }
 
-            setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
           }
         } else {
           if (loadedEvents < 1) {
@@ -105,7 +106,7 @@ export class HeaderComponent implements OnInit {
           }
 
           for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
-            setTimeout(() => {
+            window.setTimeout(() => {
               parentElement.scrollLeft = i;
             }, 100);
           }
@@ -127,10 +128,10 @@ export class HeaderComponent implements OnInit {
 
             if (accumulated / width == 1 && accumulated > 0) {
               accumulated = 0;
-              setTimeout(() =>{this.removeComponent.next('removeComponent');}, 1000);
+              window.setTimeout(() =>{this.removeComponent.next('removeComponent');}, 150);
             }
 
-            setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
           }
         } else {
           if (loadedEvents < 2) {
@@ -140,7 +141,7 @@ export class HeaderComponent implements OnInit {
           }
 
           for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
-            setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
           }
         }
         break;
@@ -155,7 +156,7 @@ export class HeaderComponent implements OnInit {
 
         if (parentElement.scrollLeft > 3 * width) {
           for (let i = parentElement.scrollLeft; i >= 3 * width; i = i - 0.5) {
-            setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
           }
         } else {
           if (loadedEvents < 3) {
@@ -165,7 +166,7 @@ export class HeaderComponent implements OnInit {
           }
 
           for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
-            setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
           }
         }
         break;

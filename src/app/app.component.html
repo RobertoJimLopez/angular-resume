@@ -6,7 +6,7 @@ id="main"
   (loadComponent)="loadComponent()"
   (removeComponent)="removeComponent()">
   </app-header>
-  <app-home></app-home>
   <ng-template anchorHost></ng-template>
+  <router-outlet (activate)='onActivate($event)'></router-outlet>
   <app-scroll-arrow></app-scroll-arrow>
 </div>

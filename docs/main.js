@@ -28,7 +28,38 @@ __webpack_require__.r(__webpack_exports__);
 class ExperienceComponent {
     constructor() { }
     ngOnInit() {
-        console.log('experience');
+        let width = window.innerWidth;
+        let parentElement = document.getElementById("main");
+        while (parentElement != null && parentElement.parentElement != null) {
+            parentElement = parentElement.parentElement;
+        }
+        let homeButton = document.getElementById("home");
+        if (homeButton != null) {
+            this.homeButton = homeButton;
+        }
+        let aboutMeButton = document.getElementById("about-me");
+        if (aboutMeButton != null) {
+            this.aboutMeButton = aboutMeButton;
+        }
+        let experienceButton = document.getElementById("experience");
+        if (experienceButton != null) {
+            this.experienceButton = experienceButton;
+        }
+        let contactButton = document.getElementById("contact");
+        if (contactButton != null) {
+            this.contactButton = contactButton;
+        }
+        if (this.homeButton && this.aboutMeButton && this.experienceButton && this.contactButton) {
+            this.homeButton.className = "button";
+            this.aboutMeButton.className = "button";
+            this.experienceButton.className = "hover-copy";
+            this.contactButton.className = "button";
+        }
+        if (parentElement != null && parentElement.scrollLeft % width == 0) {
+            for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
+                parentElement.scrollLeft = i;
+            }
+        }
     }
 }
 ExperienceComponent.ɵfac = function ExperienceComponent_Factory(t) { return new (t || ExperienceComponent)(); };
@@ -255,9 +286,39 @@ __webpack_require__.r(__webpack_exports__);
 
 function AboutMeComponent_ng_template_8_Template(rf, ctx) { }
 class AboutMeComponent {
-    constructor() { }
     ngOnInit() {
-        console.log('About-me');
+        let width = window.innerWidth;
+        let parentElement = document.getElementById("main");
+        while (parentElement != null && parentElement.parentElement != null) {
+            parentElement = parentElement.parentElement;
+        }
+        let homeButton = document.getElementById("home");
+        if (homeButton != null) {
+            this.homeButton = homeButton;
+        }
+        let aboutMeButton = document.getElementById("about-me");
+        if (aboutMeButton != null) {
+            this.aboutMeButton = aboutMeButton;
+        }
+        let experienceButton = document.getElementById("experience");
+        if (experienceButton != null) {
+            this.experienceButton = experienceButton;
+        }
+        let contactButton = document.getElementById("contact");
+        if (contactButton != null) {
+            this.contactButton = contactButton;
+        }
+        if (this.homeButton && this.aboutMeButton && this.experienceButton && this.contactButton) {
+            this.homeButton.className = "button";
+            this.aboutMeButton.className = "hover-copy";
+            this.experienceButton.className = "button";
+            this.contactButton.className = "button";
+        }
+        if (parentElement != null && parentElement.scrollLeft % width == 0) {
+            for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
+                parentElement.scrollLeft = i;
+            }
+        }
     }
 }
 AboutMeComponent.ɵfac = function AboutMeComponent_Factory(t) { return new (t || AboutMeComponent)(); };
@@ -282,7 +343,7 @@ AboutMeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineC
                 templateUrl: './about-me.component.html',
                 styleUrls: ['./about-me.component.css']
             }]
-    }], function () { return []; }, null); })();
+    }], null, null); })();
 
 
 /***/ }),
@@ -329,9 +390,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ViewsService", function() { return ViewsService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _anchor_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./anchor-item */ "2G7+");
-/* harmony import */ var _about_me_about_me_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./about-me/about-me.component */ "NgH1");
-/* harmony import */ var _experience_experience_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./experience/experience.component */ "1fes");
-/* harmony import */ var _contact_contact_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./contact/contact.component */ "bzTf");
+/* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./home/home.component */ "9vUh");
+/* harmony import */ var _about_me_about_me_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./about-me/about-me.component */ "NgH1");
+/* harmony import */ var _experience_experience_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./experience/experience.component */ "1fes");
+/* harmony import */ var _contact_contact_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./contact/contact.component */ "bzTf");
+
 
 
 
@@ -342,9 +405,10 @@ class ViewsService {
     constructor() {
         this.index = 0;
         this.anchorItems = [
-            new _anchor_item__WEBPACK_IMPORTED_MODULE_1__["AnchorItem"](_about_me_about_me_component__WEBPACK_IMPORTED_MODULE_2__["AboutMeComponent"], {}),
-            new _anchor_item__WEBPACK_IMPORTED_MODULE_1__["AnchorItem"](_experience_experience_component__WEBPACK_IMPORTED_MODULE_3__["ExperienceComponent"], {}),
-            new _anchor_item__WEBPACK_IMPORTED_MODULE_1__["AnchorItem"](_contact_contact_component__WEBPACK_IMPORTED_MODULE_4__["ContactComponent"], {})
+            new _anchor_item__WEBPACK_IMPORTED_MODULE_1__["AnchorItem"](_home_home_component__WEBPACK_IMPORTED_MODULE_2__["HomeComponent"], {}),
+            new _anchor_item__WEBPACK_IMPORTED_MODULE_1__["AnchorItem"](_about_me_about_me_component__WEBPACK_IMPORTED_MODULE_3__["AboutMeComponent"], {}),
+            new _anchor_item__WEBPACK_IMPORTED_MODULE_1__["AnchorItem"](_experience_experience_component__WEBPACK_IMPORTED_MODULE_4__["ExperienceComponent"], {}),
+            new _anchor_item__WEBPACK_IMPORTED_MODULE_1__["AnchorItem"](_contact_contact_component__WEBPACK_IMPORTED_MODULE_5__["ContactComponent"], {})
         ];
         this.itemCount = this.anchorItems.length;
         this.itemEnd = false;
@@ -397,8 +461,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _anchor_directive__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./anchor.directive */ "OBt6");
 /* harmony import */ var _views_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views.service */ "QGyZ");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "tyNb");
-/* harmony import */ var _header_header_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./header/header.component */ "fECr");
-/* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./home/home.component */ "9vUh");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _header_header_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./header/header.component */ "fECr");
 /* harmony import */ var _scroll_arrow_scroll_arrow_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./scroll-arrow/scroll-arrow.component */ "URE3");
 
 
@@ -409,13 +473,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function AppComponent_ng_template_3_Template(rf, ctx) { }
+function AppComponent_ng_template_2_Template(rf, ctx) { }
 class AppComponent {
-    constructor(componentFactoryResolver, service, router) {
+    constructor(componentFactoryResolver, service, router, location) {
         this.componentFactoryResolver = componentFactoryResolver;
         this.service = service;
         this.router = router;
+        this.location = location;
         this.currentIndex = -1;
+        this.loadThreshold = 0.1;
         this.totalWidth = 0;
         this.scrollLeftVal = -1;
         this.ended = false;
@@ -424,7 +490,11 @@ class AppComponent {
         this.viewsService = service;
     }
     ngOnInit() {
-        this.router.navigate(['/home']);
+        let url = this.router.url;
+        console.log(url);
+        if (url == '/') {
+            this.location.go('home');
+        }
         let mainElement = document.getElementById("main");
         let currWidth = window.innerWidth;
         this.totalWidth = window.innerWidth + 1;
@@ -451,6 +521,7 @@ class AppComponent {
         }
     }
     loadComponent() {
+        console.log("loadComponent");
         this.currentIndex = this.viewsService.getIndex();
         const anchorItem = this.views[this.currentIndex];
         this.viewsService.increaseIndex();
@@ -475,12 +546,12 @@ class AppComponent {
             this.scrollLeftVal = parentElement.scrollLeft;
             // ------------- HIGHLIGHT BUTTONS --------------------------------
             // ----- HOME BUTTON -----
-            if (parentElement.scrollLeft + parentElement.clientWidth >= parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+            if (parentElement.scrollLeft + parentElement.clientWidth >= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
                 if (this.homeButton) {
                     this.homeButton.className = "button";
                 }
             }
-            if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + +(0.4 * parentElement.clientWidth)) {
+            if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
                 if (this.homeButton) {
                     this.homeButton.className = "hover-copy";
                     this.router.navigate(['/home']);
@@ -488,14 +559,14 @@ class AppComponent {
             }
             // ----- HOME BUTTON -----
             // ----- ABOUT ME BUTTON -----
-            if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (0.4 * parentElement.clientWidth) ||
-                parentElement.scrollLeft + parentElement.clientWidth >= 2 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+            if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
+                parentElement.scrollLeft + parentElement.clientWidth >= 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
                 if (this.aboutMeButton) {
                     this.aboutMeButton.className = "button";
                 }
             }
-            if (parentElement.scrollLeft + parentElement.clientWidth > parentElement.clientWidth + (0.4 * parentElement.clientWidth) &&
-                parentElement.scrollLeft + parentElement.clientWidth < 2 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+            if (parentElement.scrollLeft + parentElement.clientWidth > parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
+                parentElement.scrollLeft + parentElement.clientWidth < 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
                 if (this.aboutMeButton) {
                     this.aboutMeButton.className = "hover-copy";
                     this.router.navigate(['/about-me']);
@@ -503,14 +574,14 @@ class AppComponent {
             }
             // ----- ABOUT ME BUTTON -----
             // ----- EXPERIENCE BUTTON -----
-            if (parentElement.scrollLeft + parentElement.clientWidth <= 2 * parentElement.clientWidth + (0.4 * parentElement.clientWidth) ||
-                parentElement.scrollLeft + parentElement.clientWidth >= 3 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+            if (parentElement.scrollLeft + parentElement.clientWidth <= 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
+                parentElement.scrollLeft + parentElement.clientWidth >= 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
                 if (this.experienceButton) {
                     this.experienceButton.className = "button";
                 }
             }
-            if (parentElement.scrollLeft + parentElement.clientWidth > 2 * parentElement.clientWidth + (0.4 * parentElement.clientWidth) &&
-                parentElement.scrollLeft + parentElement.clientWidth < 3 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+            if (parentElement.scrollLeft + parentElement.clientWidth > 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
+                parentElement.scrollLeft + parentElement.clientWidth < 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
                 if (this.experienceButton) {
                     this.experienceButton.className = "hover-copy";
                     this.router.navigate(['/experience']);
@@ -518,14 +589,14 @@ class AppComponent {
             }
             // ----- EXPERIENCE BUTTON -----
             // ----- CONTACT BUTTON -----
-            if (parentElement.scrollLeft + parentElement.clientWidth <= 3 * parentElement.clientWidth + (0.4 * parentElement.clientWidth) ||
-                parentElement.scrollLeft + parentElement.clientWidth >= 4 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+            if (parentElement.scrollLeft + parentElement.clientWidth <= 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
+                parentElement.scrollLeft + parentElement.clientWidth >= 4 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
                 if (this.contactButton) {
                     this.contactButton.className = "button";
                 }
             }
-            if (parentElement.scrollLeft + parentElement.clientWidth > 3 * parentElement.clientWidth + (0.4 * parentElement.clientWidth) &&
-                parentElement.scrollLeft + parentElement.clientWidth < 4 * parentElement.clientWidth + (0.4 * parentElement.clientWidth)) {
+            if (parentElement.scrollLeft + parentElement.clientWidth > 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
+                parentElement.scrollLeft + parentElement.clientWidth < 4 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
                 if (this.contactButton) {
                     this.contactButton.className = "hover-copy";
                     this.router.navigate(['/contact']);
@@ -533,7 +604,7 @@ class AppComponent {
             }
             // ----- CONTACT BUTTON -----
             // ------------- HIGHLIGHT BUTTONS --------------------------------
-            if (!this.ended && parentElement.scrollLeft + parentElement.clientWidth >= this.totalWidth) {
+            if (!this.ended && this.viewsService.getIndex() < 3 && parentElement.scrollLeft + parentElement.clientWidth >= this.totalWidth) {
                 this.loadComponent();
                 if (this.viewsService.itemEnded())
                     this.ended = true;
@@ -560,24 +631,49 @@ class AppComponent {
         this.clientWidth = window.innerWidth;
         this.totalWidth = this.pagesLoaded * (window.innerWidth - 1);
     }
+    onActivate(event) {
+        let url = this.router.url;
+        let loadedComponents = this.viewsService.getIndex();
+        switch (url) {
+            case '/about-me': {
+                this.loadNComponents(1 - loadedComponents);
+                break;
+            }
+            case '/experience': {
+                this.loadNComponents(2 - loadedComponents);
+                break;
+            }
+            case '/contact': {
+                this.loadNComponents(3 - loadedComponents);
+                break;
+            }
+        }
+    }
+    loadNComponents(components) {
+        for (let i = 0; i < components; i++) {
+            this.loadComponent();
+        }
+    }
 }
-AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_views_service__WEBPACK_IMPORTED_MODULE_2__["ViewsService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"])); };
+AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_views_service__WEBPACK_IMPORTED_MODULE_2__["ViewsService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_4__["Location"])); };
 AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], viewQuery: function AppComponent_Query(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstaticViewQuery"](_anchor_directive__WEBPACK_IMPORTED_MODULE_1__["AnchorDirective"], true);
     } if (rf & 2) {
         let _t;
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.anchorHost = _t.first);
-    } }, inputs: { views: "views", viewsService: "viewsService" }, decls: 5, vars: 0, consts: [["id", "main", 1, "main", 3, "wheel", "resize"], [3, "loadComponent", "removeComponent"], ["anchorHost", ""]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+    } }, inputs: { views: "views", viewsService: "viewsService" }, decls: 5, vars: 0, consts: [["id", "main", 1, "main", 3, "wheel", "resize"], [3, "loadComponent", "removeComponent"], ["anchorHost", ""], [3, "activate"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("wheel", function AppComponent_Template_div_wheel_0_listener($event) { return ctx.onWheel($event); })("resize", function AppComponent_Template_div_resize_0_listener() { return ctx.onResize(); }, false, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresolveWindow"]);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "app-header", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("loadComponent", function AppComponent_Template_app_header_loadComponent_1_listener() { return ctx.loadComponent(); })("removeComponent", function AppComponent_Template_app_header_removeComponent_1_listener() { return ctx.removeComponent(); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](2, "app-home");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](3, AppComponent_ng_template_3_Template, 0, 0, "ng-template", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, AppComponent_ng_template_2_Template, 0, 0, "ng-template", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "router-outlet", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("activate", function AppComponent_Template_router_outlet_activate_3_listener($event) { return ctx.onActivate($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](4, "app-scroll-arrow");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } }, directives: [_header_header_component__WEBPACK_IMPORTED_MODULE_4__["HeaderComponent"], _home_home_component__WEBPACK_IMPORTED_MODULE_5__["HomeComponent"], _anchor_directive__WEBPACK_IMPORTED_MODULE_1__["AnchorDirective"], _scroll_arrow_scroll_arrow_component__WEBPACK_IMPORTED_MODULE_6__["ScrollArrowComponent"]], styles: [".main[_ngcontent-%COMP%] {\r\n  background-color: lightgray;\r\n  height: 100vh;\r\n  display: inline-flex;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsMkJBQTJCO0VBQzNCLGFBQWE7RUFDYixvQkFBb0I7QUFDdEIiLCJmaWxlIjoiYXBwLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubWFpbiB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRncmF5O1xyXG4gIGhlaWdodDogMTAwdmg7XHJcbiAgZGlzcGxheTogaW5saW5lLWZsZXg7XHJcbn0iXX0= */"] });
+    } }, directives: [_header_header_component__WEBPACK_IMPORTED_MODULE_5__["HeaderComponent"], _anchor_directive__WEBPACK_IMPORTED_MODULE_1__["AnchorDirective"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterOutlet"], _scroll_arrow_scroll_arrow_component__WEBPACK_IMPORTED_MODULE_6__["ScrollArrowComponent"]], styles: [".main[_ngcontent-%COMP%] {\r\n  background-color: lightgray;\r\n  height: 100vh;\r\n  display: inline-flex;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsMkJBQTJCO0VBQzNCLGFBQWE7RUFDYixvQkFBb0I7QUFDdEIiLCJmaWxlIjoiYXBwLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubWFpbiB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRncmF5O1xyXG4gIGhlaWdodDogMTAwdmg7XHJcbiAgZGlzcGxheTogaW5saW5lLWZsZXg7XHJcbn0iXX0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -585,7 +681,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
                 templateUrl: './app.component.html',
                 styleUrls: ['./app.component.css']
             }]
-    }], function () { return [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"] }, { type: _views_service__WEBPACK_IMPORTED_MODULE_2__["ViewsService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }]; }, { views: [{
+    }], function () { return [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"] }, { type: _views_service__WEBPACK_IMPORTED_MODULE_2__["ViewsService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }, { type: _angular_common__WEBPACK_IMPORTED_MODULE_4__["Location"] }]; }, { views: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }], viewsService: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
@@ -743,7 +839,38 @@ __webpack_require__.r(__webpack_exports__);
 class ContactComponent {
     constructor() { }
     ngOnInit() {
-        console.log('contact');
+        let width = window.innerWidth;
+        let parentElement = document.getElementById("main");
+        while (parentElement != null && parentElement.parentElement != null) {
+            parentElement = parentElement.parentElement;
+        }
+        let homeButton = document.getElementById("home");
+        if (homeButton != null) {
+            this.homeButton = homeButton;
+        }
+        let aboutMeButton = document.getElementById("about-me");
+        if (aboutMeButton != null) {
+            this.aboutMeButton = aboutMeButton;
+        }
+        let experienceButton = document.getElementById("experience");
+        if (experienceButton != null) {
+            this.experienceButton = experienceButton;
+        }
+        let contactButton = document.getElementById("contact");
+        if (contactButton != null) {
+            this.contactButton = contactButton;
+        }
+        if (this.homeButton && this.aboutMeButton && this.experienceButton && this.contactButton) {
+            this.homeButton.className = "button";
+            this.aboutMeButton.className = "button";
+            this.experienceButton.className = "button";
+            this.contactButton.className = "hover-copy";
+        }
+        if (parentElement != null && parentElement.scrollLeft % width == 0) {
+            for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
+                parentElement.scrollLeft = i;
+            }
+        }
     }
 }
 ContactComponent.ɵfac = function ContactComponent_Factory(t) { return new (t || ContactComponent)(); };
@@ -816,6 +943,7 @@ class HeaderComponent {
     }
     onClick(event) {
         let width = window.innerWidth;
+        console.log(width);
         let parentElement = event.target;
         let loadedEvents = this.viewsService.getIndex();
         while (parentElement != null && parentElement.parentElement != null) {
@@ -835,9 +963,9 @@ class HeaderComponent {
                         accumulated += 0.5;
                         if (accumulated / width == 1 && accumulated > 0) {
                             accumulated = 0;
-                            setTimeout(() => { this.removeComponent.next('removeComponent'); }, 1000);
+                            window.setTimeout(() => { this.removeComponent.next('removeComponent'); }, 150);
                         }
-                        setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                        window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
                     }
                 }
                 break;
@@ -855,9 +983,9 @@ class HeaderComponent {
                         accumulated += 0.5;
                         if (accumulated / width == 1 && accumulated > 0) {
                             accumulated = 0;
-                            setTimeout(() => { this.removeComponent.next('removeComponent'); }, 1000);
+                            window.setTimeout(() => { this.removeComponent.next('removeComponent'); }, 150);
                         }
-                        setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                        window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
                     }
                 }
                 else {
@@ -865,7 +993,7 @@ class HeaderComponent {
                         this.loadComponent.next('loadComponent');
                     }
                     for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
-                        setTimeout(() => {
+                        window.setTimeout(() => {
                             parentElement.scrollLeft = i;
                         }, 100);
                     }
@@ -885,9 +1013,9 @@ class HeaderComponent {
                         accumulated += 0.5;
                         if (accumulated / width == 1 && accumulated > 0) {
                             accumulated = 0;
-                            setTimeout(() => { this.removeComponent.next('removeComponent'); }, 1000);
+                            window.setTimeout(() => { this.removeComponent.next('removeComponent'); }, 150);
                         }
-                        setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                        window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
                     }
                 }
                 else {
@@ -897,7 +1025,7 @@ class HeaderComponent {
                         }
                     }
                     for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
-                        setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                        window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
                     }
                 }
                 break;
@@ -911,7 +1039,7 @@ class HeaderComponent {
                 }
                 if (parentElement.scrollLeft > 3 * width) {
                     for (let i = parentElement.scrollLeft; i >= 3 * width; i = i - 0.5) {
-                        setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                        window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
                     }
                 }
                 else {
@@ -921,7 +1049,7 @@ class HeaderComponent {
                         }
                     }
                     for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
-                        setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                        window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
                     }
                 }
                 break;
@@ -1049,18 +1177,22 @@ const routes = [
     {
         path: 'contact',
         component: _contact_contact_component__WEBPACK_IMPORTED_MODULE_4__["ContactComponent"],
+    },
+    {
+        path: '',
+        component: _home_home_component__WEBPACK_IMPORTED_MODULE_2__["HomeComponent"]
     }
 ];
 _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(routes, { scrollPositionRestoration: 'enabled' });
 class AppRoutingModule {
 }
 AppRoutingModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineNgModule"]({ type: AppRoutingModule });
-AppRoutingModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({ factory: function AppRoutingModule_Factory(t) { return new (t || AppRoutingModule)(); }, imports: [[_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(routes)], _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"]] });
+AppRoutingModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({ factory: function AppRoutingModule_Factory(t) { return new (t || AppRoutingModule)(); }, imports: [[_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(routes, { onSameUrlNavigation: 'reload' })], _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"]] });
 (function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](AppRoutingModule, { imports: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"]], exports: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"]] }); })();
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppRoutingModule, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
         args: [{
-                imports: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(routes)],
+                imports: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(routes, { onSameUrlNavigation: 'reload' })],
                 exports: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"]]
             }]
     }], null, null); })();

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { AnchorItem } from './anchor-item';
-import { TestComponent } from './test/test.component';
+import { HomeComponent } from './home/home.component';
 import { AboutMeComponent } from './about-me/about-me.component';
 import { ExperienceComponent } from './experience/experience.component';
 import { ContactComponent } from './contact/contact.component';
@@ -13,6 +13,7 @@ export class ViewsService {
   index = 0;
 
   anchorItems = [
+    new AnchorItem(HomeComponent, {}),
     new AnchorItem(AboutMeComponent, {}),
     new AnchorItem(ExperienceComponent, {}),
     new AnchorItem(ContactComponent, {})

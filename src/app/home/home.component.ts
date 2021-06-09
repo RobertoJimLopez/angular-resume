@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { element } from 'protractor';
 import Typewriter from 't-writer.js'
 
 @Component({
