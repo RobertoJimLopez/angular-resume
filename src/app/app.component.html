@@ -1,7 +1,9 @@
 <div class="main"
 id="main"
 (wheel)="onWheel($event)"
-(window:resize)="onResize()">
+(window:resize)="onResize()"
+(swipeleft)="onSwipeLeft($event)"
+(swiperight)="onSwipeRight($event)">
   <app-header
   (loadComponent)="loadComponent()"
   (removeComponent)="removeComponent()">

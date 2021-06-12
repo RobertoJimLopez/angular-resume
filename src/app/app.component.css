@@ -3,3 +3,11 @@
   height: 100vh;
   display: inline-flex;
 }
+
+.main-blur {
+  color: lightgray;
+  height: 100vh;
+  display: inline-flex;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}

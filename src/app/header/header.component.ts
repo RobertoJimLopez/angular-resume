@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   aboutMeButton: HTMLElement | any;
   experienceButton: HTMLElement | any;
   contactButton: HTMLElement | any;
+  mainView: HTMLElement | any;
 
   constructor(private service: ViewsService) {
     this.viewsService = service;
@@ -54,6 +55,15 @@ export class HeaderComponent implements OnInit {
 
     while (parentElement != null && parentElement.parentElement != null) {
       parentElement = parentElement.parentElement;
+
+      if (!this.mainView && parentElement.id == "main") {
+        this.mainView = parentElement;
+      }
+    }
+
+    if (this.mainView) {
+      this.mainView.className = "main-blur";
+      console.log(this.mainView);
     }
 
     switch((<HTMLTextAreaElement>event.target).id) {
@@ -174,6 +184,10 @@ export class HeaderComponent implements OnInit {
       default: {
         console.log("nope");
       }
+    }
+
+    if (this.mainView) {
+      window.setTimeout(() => {this.mainView.className = "main";}, 200)
     }
   }
 

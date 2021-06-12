@@ -232,4 +232,106 @@ export class AppComponent implements OnInit {
       this.loadComponent();
     }
   }
+
+  onSwipeLeft(event: any): void {
+    let width = window.innerWidth;
+    let parentElement = (<Element>event.target);
+    let loadedEvents = this.viewsService.getIndex();
+
+    while (parentElement != null && parentElement.parentElement != null) {
+      parentElement = parentElement.parentElement;
+    }
+
+    if (parentElement.scrollLeft < width) {
+      if (loadedEvents < 1) {
+        this.loadComponent();
+      }
+
+      window.setTimeout(() => {this.router.navigate(['/about-me']);}, 110);
+
+      for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
+        window.setTimeout(() => {
+          parentElement.scrollLeft = i;
+        }, 100);
+      }
+    } else if(parentElement.scrollLeft >= width && parentElement.scrollLeft < 2 * width) {
+      if (loadedEvents < 2) {
+        this.loadComponent();
+      }
+
+      window.setTimeout(() => {this.router.navigate(['/experience']);}, 110);
+
+      for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
+        window.setTimeout(() => {
+          parentElement.scrollLeft = i;
+        }, 100);
+      }
+    } else if(parentElement.scrollLeft >= 2 * width && parentElement.scrollLeft < 3 * width) {
+      if (loadedEvents < 3) {
+        this.loadComponent();
+      }
+
+      window.setTimeout(() => {this.router.navigate(['/contact']);}, 110);
+
+      for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
+        window.setTimeout(() => {
+          parentElement.scrollLeft = i;
+        }, 100);
+      }
+    }
+  }
+
+  onSwipeRight(event: any): void {
+    let width = window.innerWidth;
+    let parentElement = (<Element>event.target);
+    let loadedEvents = this.viewsService.getIndex();
+
+    while (parentElement != null && parentElement.parentElement != null) {
+      parentElement = parentElement.parentElement;
+    }
+
+    if (parentElement.scrollLeft >= width && parentElement.scrollLeft < 2 * width) {
+      window.setTimeout(() => {this.router.navigate(['/home']);}, 190);
+
+      let accumulated = 0;
+      for (let i = parentElement.scrollLeft; i >= 0; i = i - 0.5) {
+        accumulated += 0.5;
+
+        if (accumulated / width == 1 && accumulated > 0) {
+          accumulated = 0;
+          window.setTimeout(() =>{this.removeComponent();}, 150);
+        }
+
+        window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+      }
+    } else if (parentElement.scrollLeft >= 2 * width && parentElement.scrollLeft < 3 * width) {
+      window.setTimeout(() => {this.router.navigate(['/about-me']);}, 190);
+
+      let accumulated = 0;
+      for (let i = parentElement.scrollLeft; i >= width; i = i - 0.5) {
+        accumulated += 0.5;
+
+        if (accumulated / width == 1 && accumulated > 0) {
+          accumulated = 0;
+          window.setTimeout(() =>{this.removeComponent();}, 150);
+        }
+
+        window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+      }
+    } else if (parentElement.scrollLeft >= 3 * width && parentElement.scrollLeft < 4 * width) {
+      window.setTimeout(() => {this.router.navigate(['/experience']);}, 190);
+
+      let accumulated = 0;
+      for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 0.5) {
+        accumulated += 0.5;
+
+        if (accumulated / width == 1 && accumulated > 0) {
+          accumulated = 0;
+          window.setTimeout(() =>{this.removeComponent();}, 150);
+        }
+
+        window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+      }
+    }
+  }
 }
