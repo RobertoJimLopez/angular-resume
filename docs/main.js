@@ -55,7 +55,7 @@ class ExperienceComponent {
             this.experienceButton.className = "hover-copy";
             this.contactButton.className = "button";
         }
-        if (parentElement != null && parentElement.scrollLeft % width == 0) {
+        if (parentElement != null && parentElement.scrollLeft % width == 0 && width > 900) {
             for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
                 parentElement.scrollLeft = i;
             }
@@ -310,7 +310,7 @@ class AboutMeComponent {
             this.experienceButton.className = "button";
             this.contactButton.className = "button";
         }
-        if (parentElement != null && parentElement.scrollLeft % width == 0) {
+        if (parentElement != null && parentElement.scrollLeft % width == 0 && width > 900) {
             for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
                 parentElement.scrollLeft = i;
             }
@@ -1017,7 +1017,7 @@ class ContactComponent {
             this.experienceButton.className = "button";
             this.contactButton.className = "hover-copy";
         }
-        if (parentElement != null && parentElement.scrollLeft % width == 0) {
+        if (parentElement != null && parentElement.scrollLeft % width == 0 && width > 900) {
             for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
                 parentElement.scrollLeft = i;
             }

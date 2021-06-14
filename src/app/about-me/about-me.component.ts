@@ -50,7 +50,7 @@ export class AboutMeComponent implements OnInit {
       this.contactButton.className = "button";
     }
 
-    if (parentElement != null && parentElement.scrollLeft % width == 0) {
+    if (parentElement != null && parentElement.scrollLeft % width == 0 && width > 900) {
       for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
         parentElement.scrollLeft = i;
       }

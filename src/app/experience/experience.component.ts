@@ -52,7 +52,7 @@ export class ExperienceComponent implements OnInit {
       this.contactButton.className = "button";
     }
 
-    if (parentElement != null && parentElement.scrollLeft % width == 0) {
+    if (parentElement != null && parentElement.scrollLeft % width == 0 && width > 900) {
       for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
         parentElement.scrollLeft = i;
       }
