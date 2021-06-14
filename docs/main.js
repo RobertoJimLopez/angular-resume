@@ -802,7 +802,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](4, "app-scroll-arrow");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } }, directives: [_header_header_component__WEBPACK_IMPORTED_MODULE_5__["HeaderComponent"], _anchor_directive__WEBPACK_IMPORTED_MODULE_1__["AnchorDirective"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterOutlet"], _scroll_arrow_scroll_arrow_component__WEBPACK_IMPORTED_MODULE_6__["ScrollArrowComponent"]], styles: [".main[_ngcontent-%COMP%] {\r\n  background-color: lightgray;\r\n  height: 100vh;\r\n  display: inline-flex;\r\n}\r\n\r\n.main-blur[_ngcontent-%COMP%] {\r\n  color: lightgray;\r\n  height: 100vh;\r\n  display: inline-flex;\r\n  filter: blur(0px);\r\n  -webkit-filter: blur(0px);\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsMkJBQTJCO0VBQzNCLGFBQWE7RUFDYixvQkFBb0I7QUFDdEI7O0FBRUE7RUFDRSxnQkFBZ0I7RUFDaEIsYUFBYTtFQUNiLG9CQUFvQjtFQUNwQixpQkFBaUI7RUFDakIseUJBQXlCO0FBQzNCIiwiZmlsZSI6ImFwcC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLm1haW4ge1xyXG4gIGJhY2tncm91bmQtY29sb3I6IGxpZ2h0Z3JheTtcclxuICBoZWlnaHQ6IDEwMHZoO1xyXG4gIGRpc3BsYXk6IGlubGluZS1mbGV4O1xyXG59XHJcblxyXG4ubWFpbi1ibHVyIHtcclxuICBjb2xvcjogbGlnaHRncmF5O1xyXG4gIGhlaWdodDogMTAwdmg7XHJcbiAgZGlzcGxheTogaW5saW5lLWZsZXg7XHJcbiAgZmlsdGVyOiBibHVyKDBweCk7XHJcbiAgLXdlYmtpdC1maWx0ZXI6IGJsdXIoMHB4KTtcclxufSJdfQ== */"] });
+    } }, directives: [_header_header_component__WEBPACK_IMPORTED_MODULE_5__["HeaderComponent"], _anchor_directive__WEBPACK_IMPORTED_MODULE_1__["AnchorDirective"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterOutlet"], _scroll_arrow_scroll_arrow_component__WEBPACK_IMPORTED_MODULE_6__["ScrollArrowComponent"]], styles: [".main[_ngcontent-%COMP%] {\r\n  background-color: lightgray;\r\n  height: 100vh;\r\n  display: inline-flex;\r\n}\r\n\r\n.main-blur[_ngcontent-%COMP%] {\r\n  color: lightgray;\r\n  height: 100vh;\r\n  display: inline-flex;\r\n  filter: blur(8px);\r\n  -webkit-filter: blur(8px);\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsMkJBQTJCO0VBQzNCLGFBQWE7RUFDYixvQkFBb0I7QUFDdEI7O0FBRUE7RUFDRSxnQkFBZ0I7RUFDaEIsYUFBYTtFQUNiLG9CQUFvQjtFQUNwQixpQkFBaUI7RUFDakIseUJBQXlCO0FBQzNCIiwiZmlsZSI6ImFwcC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLm1haW4ge1xyXG4gIGJhY2tncm91bmQtY29sb3I6IGxpZ2h0Z3JheTtcclxuICBoZWlnaHQ6IDEwMHZoO1xyXG4gIGRpc3BsYXk6IGlubGluZS1mbGV4O1xyXG59XHJcblxyXG4ubWFpbi1ibHVyIHtcclxuICBjb2xvcjogbGlnaHRncmF5O1xyXG4gIGhlaWdodDogMTAwdmg7XHJcbiAgZGlzcGxheTogaW5saW5lLWZsZXg7XHJcbiAgZmlsdGVyOiBibHVyKDhweCk7XHJcbiAgLXdlYmtpdC1maWx0ZXI6IGJsdXIoOHB4KTtcclxufSJdfQ== */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -1072,9 +1072,13 @@ class HeaderComponent {
         this.service = service;
         this.loadComponent = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.removeComponent = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.smartphoneVersion = false;
         this.viewsService = service;
     }
     ngOnInit() {
+        if (window.innerWidth < 900) {
+            this.smartphoneVersion = true;
+        }
         let homeButton = document.getElementById("home");
         if (homeButton != null) {
             this.homeButton = homeButton;
@@ -1094,7 +1098,6 @@ class HeaderComponent {
     }
     onClick(event) {
         let width = window.innerWidth;
-        console.log(width);
         let parentElement = event.target;
         let loadedEvents = this.viewsService.getIndex();
         while (parentElement != null && parentElement.parentElement != null) {
@@ -1103,7 +1106,7 @@ class HeaderComponent {
                 this.mainView = parentElement;
             }
         }
-        if (this.mainView) {
+        if (this.mainView && !this.smartphoneVersion) {
             this.mainView.className = "main-blur";
             console.log(this.mainView);
         }
@@ -1115,7 +1118,7 @@ class HeaderComponent {
                     this.experienceButton.className = "button";
                     this.contactButton.className = "button";
                 }
-                if (parentElement.scrollLeft > 0) {
+                if (parentElement.scrollLeft > 0 && !this.smartphoneVersion) {
                     let accumulated = 0;
                     for (let i = parentElement.scrollLeft; i >= 0; i = i - 0.5) {
                         accumulated += 0.5;
@@ -1135,25 +1138,27 @@ class HeaderComponent {
                     this.experienceButton.className = "button";
                     this.contactButton.className = "button";
                 }
-                if (parentElement.scrollLeft > width) {
-                    let accumulated = 0;
-                    for (let i = parentElement.scrollLeft; i >= width; i = i - 0.5) {
-                        accumulated += 0.5;
-                        if (accumulated / width == 1 && accumulated > 0) {
-                            accumulated = 0;
-                            window.setTimeout(() => { this.removeComponent.next('removeComponent'); }, 150);
+                if (!this.smartphoneVersion) {
+                    if (parentElement.scrollLeft > width) {
+                        let accumulated = 0;
+                        for (let i = parentElement.scrollLeft; i >= width; i = i - 0.5) {
+                            accumulated += 0.5;
+                            if (accumulated / width == 1 && accumulated > 0) {
+                                accumulated = 0;
+                                window.setTimeout(() => { this.removeComponent.next('removeComponent'); }, 150);
+                            }
+                            window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
                         }
-                        window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
                     }
-                }
-                else {
-                    if (loadedEvents < 1) {
-                        this.loadComponent.next('loadComponent');
-                    }
-                    for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
-                        window.setTimeout(() => {
-                            parentElement.scrollLeft = i;
-                        }, 100);
+                    else {
+                        if (loadedEvents < 1) {
+                            this.loadComponent.next('loadComponent');
+                        }
+                        for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
+                            window.setTimeout(() => {
+                                parentElement.scrollLeft = i;
+                            }, 100);
+                        }
                     }
                 }
                 break;
@@ -1165,25 +1170,27 @@ class HeaderComponent {
                     this.experienceButton.className = "hover-copy";
                     this.contactButton.className = "button";
                 }
-                if (parentElement.scrollLeft > 2 * width) {
-                    let accumulated = 0;
-                    for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 0.5) {
-                        accumulated += 0.5;
-                        if (accumulated / width == 1 && accumulated > 0) {
-                            accumulated = 0;
-                            window.setTimeout(() => { this.removeComponent.next('removeComponent'); }, 150);
-                        }
-                        window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
-                    }
-                }
-                else {
-                    if (loadedEvents < 2) {
-                        for (let i = loadedEvents; i < 2; i++) {
-                            this.loadComponent.next('loadComponent');
+                if (!this.smartphoneVersion) {
+                    if (parentElement.scrollLeft > 2 * width) {
+                        let accumulated = 0;
+                        for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 0.5) {
+                            accumulated += 0.5;
+                            if (accumulated / width == 1 && accumulated > 0) {
+                                accumulated = 0;
+                                window.setTimeout(() => { this.removeComponent.next('removeComponent'); }, 150);
+                            }
+                            window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
                         }
                     }
-                    for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
-                        window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                    else {
+                        if (loadedEvents < 2) {
+                            for (let i = loadedEvents; i < 2; i++) {
+                                this.loadComponent.next('loadComponent');
+                            }
+                        }
+                        for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
+                            window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                        }
                     }
                 }
                 break;
@@ -1195,19 +1202,21 @@ class HeaderComponent {
                     this.experienceButton.className = "button";
                     this.contactButton.className = "hover-copy";
                 }
-                if (parentElement.scrollLeft > 3 * width) {
-                    for (let i = parentElement.scrollLeft; i >= 3 * width; i = i - 0.5) {
-                        window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
-                    }
-                }
-                else {
-                    if (loadedEvents < 3) {
-                        for (let i = loadedEvents; this.viewsService.getIndex() < 3; i++) {
-                            this.loadComponent.next('loadComponent');
+                if (!this.smartphoneVersion) {
+                    if (parentElement.scrollLeft > 3 * width) {
+                        for (let i = parentElement.scrollLeft; i >= 3 * width; i = i - 0.5) {
+                            window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
                         }
                     }
-                    for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
-                        window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                    else {
+                        if (loadedEvents < 3) {
+                            for (let i = loadedEvents; this.viewsService.getIndex() < 3; i++) {
+                                this.loadComponent.next('loadComponent');
+                            }
+                        }
+                        for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
+                            window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                        }
                     }
                 }
                 break;
@@ -1216,7 +1225,7 @@ class HeaderComponent {
                 console.log("nope");
             }
         }
-        if (this.mainView) {
+        if (this.mainView && !this.smartphoneVersion) {
             window.setTimeout(() => { this.mainView.className = "main"; }, 200);
         }
     }

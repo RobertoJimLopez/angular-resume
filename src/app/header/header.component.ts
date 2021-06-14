@@ -17,11 +17,17 @@ export class HeaderComponent implements OnInit {
   contactButton: HTMLElement | any;
   mainView: HTMLElement | any;
 
+  smartphoneVersion = false;
+
   constructor(private service: ViewsService) {
     this.viewsService = service;
   }
 
   ngOnInit(): void {
+    if (window.innerWidth < 900) {
+      this.smartphoneVersion = true;
+    }
+
     let homeButton = document.getElementById("home");
 
     if (homeButton != null) {
@@ -49,7 +55,6 @@ export class HeaderComponent implements OnInit {
 
   onClick(event: MouseEvent): void {
     let width = window.innerWidth;
-    console.log(width);
     let parentElement = (<Element>event.target);
     let loadedEvents = this.viewsService.getIndex();
 
@@ -61,7 +66,7 @@ export class HeaderComponent implements OnInit {
       }
     }
 
-    if (this.mainView) {
+    if (this.mainView && !this.smartphoneVersion) {
       this.mainView.className = "main-blur";
       console.log(this.mainView);
     }
@@ -75,7 +80,7 @@ export class HeaderComponent implements OnInit {
           this.contactButton.className = "button";
         }
 
-        if (parentElement.scrollLeft > 0) {
+        if (parentElement.scrollLeft > 0 && !this.smartphoneVersion) {
           let accumulated = 0;
           for (let i = parentElement.scrollLeft; i >= 0; i = i - 0.5) {
             accumulated += 0.5;
@@ -98,27 +103,29 @@ export class HeaderComponent implements OnInit {
           this.contactButton.className = "button";
         }
 
-        if (parentElement.scrollLeft > width) {
-          let accumulated = 0;
-          for (let i = parentElement.scrollLeft; i >= width; i = i - 0.5) {
-            accumulated += 0.5;
+        if (!this.smartphoneVersion) {
+          if (parentElement.scrollLeft > width) {
+            let accumulated = 0;
+            for (let i = parentElement.scrollLeft; i >= width; i = i - 0.5) {
+              accumulated += 0.5;
 
-            if (accumulated / width == 1 && accumulated > 0) {
-              accumulated = 0;
-              window.setTimeout(() =>{this.removeComponent.next('removeComponent');}, 150);
+              if (accumulated / width == 1 && accumulated > 0) {
+                accumulated = 0;
+                window.setTimeout(() =>{this.removeComponent.next('removeComponent');}, 150);
+              }
+
+              window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            }
+          } else {
+            if (loadedEvents < 1) {
+              this.loadComponent.next('loadComponent');
             }
 
-            window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
-          }
-        } else {
-          if (loadedEvents < 1) {
-            this.loadComponent.next('loadComponent');
-          }
-
-          for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
-            window.setTimeout(() => {
-              parentElement.scrollLeft = i;
-            }, 100);
+            for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
+              window.setTimeout(() => {
+                parentElement.scrollLeft = i;
+              }, 100);
+            }
           }
         }
         break;
@@ -131,27 +138,29 @@ export class HeaderComponent implements OnInit {
           this.contactButton.className = "button";
         }
 
-        if (parentElement.scrollLeft > 2 * width) {
-          let accumulated = 0;
-          for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 0.5) {
-            accumulated += 0.5;
+        if (!this.smartphoneVersion) {
+          if (parentElement.scrollLeft > 2 * width) {
+            let accumulated = 0;
+            for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 0.5) {
+              accumulated += 0.5;
 
-            if (accumulated / width == 1 && accumulated > 0) {
-              accumulated = 0;
-              window.setTimeout(() =>{this.removeComponent.next('removeComponent');}, 150);
+              if (accumulated / width == 1 && accumulated > 0) {
+                accumulated = 0;
+                window.setTimeout(() =>{this.removeComponent.next('removeComponent');}, 150);
+              }
+
+              window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            }
+          } else {
+            if (loadedEvents < 2) {
+              for (let i = loadedEvents; i < 2; i++) {
+                this.loadComponent.next('loadComponent');
+              }
             }
 
-            window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
-          }
-        } else {
-          if (loadedEvents < 2) {
-            for (let i = loadedEvents; i < 2; i++) {
-              this.loadComponent.next('loadComponent');
+            for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
+              window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
             }
-          }
-
-          for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
-            window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
           }
         }
         break;
@@ -164,19 +173,21 @@ export class HeaderComponent implements OnInit {
           this.contactButton.className = "hover-copy";
         }
 
-        if (parentElement.scrollLeft > 3 * width) {
-          for (let i = parentElement.scrollLeft; i >= 3 * width; i = i - 0.5) {
-            window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
-          }
-        } else {
-          if (loadedEvents < 3) {
-            for (let i = loadedEvents; this.viewsService.getIndex() < 3; i++) {
-              this.loadComponent.next('loadComponent');
+        if (!this.smartphoneVersion) {
+          if (parentElement.scrollLeft > 3 * width) {
+            for (let i = parentElement.scrollLeft; i >= 3 * width; i = i - 0.5) {
+              window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
             }
-          }
+          } else {
+            if (loadedEvents < 3) {
+              for (let i = loadedEvents; this.viewsService.getIndex() < 3; i++) {
+                this.loadComponent.next('loadComponent');
+              }
+            }
 
-          for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
-            window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
+              window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            }
           }
         }
         break;
@@ -186,7 +197,7 @@ export class HeaderComponent implements OnInit {
       }
     }
 
-    if (this.mainView) {
+    if (this.mainView && !this.smartphoneVersion) {
       window.setTimeout(() => {this.mainView.className = "main";}, 200)
     }
   }
