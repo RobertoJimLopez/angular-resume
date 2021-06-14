@@ -482,6 +482,7 @@ class AppComponent {
         this.scrollLeftVal = -1;
         this.ended = false;
         this.pagesLoaded = 1;
+        this.smartphoneVersion = false;
         this.views = service.getViews();
         this.viewsService = service;
     }
@@ -492,6 +493,9 @@ class AppComponent {
         if (mainElement != null && currWidth != null) {
             mainElement.style.width = currWidth + 1 + "px";
             this.clientWidth = currWidth;
+            if (currWidth < 900) {
+                this.smartphoneVersion = true;
+            }
         }
         let homeButton = document.getElementById("home");
         if (homeButton != null) {
@@ -513,96 +517,103 @@ class AppComponent {
     }
     loadComponent() {
         console.log("loadComponent");
-        this.currentIndex = this.viewsService.getIndex();
-        const anchorItem = this.views[this.currentIndex];
-        this.viewsService.increaseIndex();
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(anchorItem.component);
-        const viewContainerRef = this.anchorHost.viewContainerRef;
-        this.containerRef = viewContainerRef;
-        const componentRef = viewContainerRef.createComponent(componentFactory);
-        this.componentRef = componentRef;
-        componentRef.instance.data = anchorItem.data;
-        this.totalWidth += this.clientWidth - 1;
-        this.pagesLoaded++;
+        if (!this.smartphoneVersion) {
+            this.currentIndex = this.viewsService.getIndex();
+            const anchorItem = this.views[this.currentIndex];
+            this.viewsService.increaseIndex();
+            const componentFactory = this.componentFactoryResolver.resolveComponentFactory(anchorItem.component);
+            const viewContainerRef = this.anchorHost.viewContainerRef;
+            this.containerRef = viewContainerRef;
+            const componentRef = viewContainerRef.createComponent(componentFactory);
+            this.componentRef = componentRef;
+            componentRef.instance.data = anchorItem.data;
+            this.totalWidth += this.clientWidth - 1;
+            this.pagesLoaded++;
+        }
     }
     onWheel(event) {
-        let parentElement = event.target;
-        while (parentElement != null && parentElement.parentElement != null) {
-            parentElement = parentElement.parentElement;
+        if (this.smartphoneVersion) {
+            this.smartphoneNavi(event.deltaY);
         }
-        if (parentElement != null) {
-            let delta;
-            this.clientWidth == null ? delta = 50 : delta = this.clientWidth / 15;
-            event.deltaY > 0 ? parentElement.scrollLeft += event.deltaY + delta : parentElement.scrollLeft += event.deltaY - 1 * delta;
-            this.scrollLeftVal = parentElement.scrollLeft;
-            // ------------- HIGHLIGHT BUTTONS --------------------------------
-            // ----- HOME BUTTON -----
-            if (parentElement.scrollLeft + parentElement.clientWidth >= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-                if (this.homeButton) {
-                    this.homeButton.className = "button";
+        else {
+            let parentElement = event.target;
+            while (parentElement != null && parentElement.parentElement != null) {
+                parentElement = parentElement.parentElement;
+            }
+            if (parentElement != null) {
+                let delta;
+                this.clientWidth == null ? delta = 50 : delta = this.clientWidth / 15;
+                event.deltaY > 0 ? parentElement.scrollLeft += event.deltaY + delta : parentElement.scrollLeft += event.deltaY - 1 * delta;
+                this.scrollLeftVal = parentElement.scrollLeft;
+                // ------------- HIGHLIGHT BUTTONS --------------------------------
+                // ----- HOME BUTTON -----
+                if (parentElement.scrollLeft + parentElement.clientWidth >= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+                    if (this.homeButton) {
+                        this.homeButton.className = "button";
+                    }
                 }
-            }
-            if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-                if (this.homeButton) {
-                    this.homeButton.className = "hover-copy";
-                    this.router.navigate(['/home']);
+                if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+                    if (this.homeButton) {
+                        this.homeButton.className = "hover-copy";
+                        this.router.navigate(['/home']);
+                    }
                 }
-            }
-            // ----- HOME BUTTON -----
-            // ----- ABOUT ME BUTTON -----
-            if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
-                parentElement.scrollLeft + parentElement.clientWidth >= 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-                if (this.aboutMeButton) {
-                    this.aboutMeButton.className = "button";
+                // ----- HOME BUTTON -----
+                // ----- ABOUT ME BUTTON -----
+                if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
+                    parentElement.scrollLeft + parentElement.clientWidth >= 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+                    if (this.aboutMeButton) {
+                        this.aboutMeButton.className = "button";
+                    }
                 }
-            }
-            if (parentElement.scrollLeft + parentElement.clientWidth > parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
-                parentElement.scrollLeft + parentElement.clientWidth < 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-                if (this.aboutMeButton) {
-                    this.aboutMeButton.className = "hover-copy";
-                    this.router.navigate(['/about-me']);
+                if (parentElement.scrollLeft + parentElement.clientWidth > parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
+                    parentElement.scrollLeft + parentElement.clientWidth < 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+                    if (this.aboutMeButton) {
+                        this.aboutMeButton.className = "hover-copy";
+                        this.router.navigate(['/about-me']);
+                    }
                 }
-            }
-            // ----- ABOUT ME BUTTON -----
-            // ----- EXPERIENCE BUTTON -----
-            if (parentElement.scrollLeft + parentElement.clientWidth <= 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
-                parentElement.scrollLeft + parentElement.clientWidth >= 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-                if (this.experienceButton) {
-                    this.experienceButton.className = "button";
+                // ----- ABOUT ME BUTTON -----
+                // ----- EXPERIENCE BUTTON -----
+                if (parentElement.scrollLeft + parentElement.clientWidth <= 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
+                    parentElement.scrollLeft + parentElement.clientWidth >= 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+                    if (this.experienceButton) {
+                        this.experienceButton.className = "button";
+                    }
                 }
-            }
-            if (parentElement.scrollLeft + parentElement.clientWidth > 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
-                parentElement.scrollLeft + parentElement.clientWidth < 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-                if (this.experienceButton) {
-                    this.experienceButton.className = "hover-copy";
-                    this.router.navigate(['/experience']);
+                if (parentElement.scrollLeft + parentElement.clientWidth > 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
+                    parentElement.scrollLeft + parentElement.clientWidth < 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+                    if (this.experienceButton) {
+                        this.experienceButton.className = "hover-copy";
+                        this.router.navigate(['/experience']);
+                    }
                 }
-            }
-            // ----- EXPERIENCE BUTTON -----
-            // ----- CONTACT BUTTON -----
-            if (parentElement.scrollLeft + parentElement.clientWidth <= 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
-                parentElement.scrollLeft + parentElement.clientWidth >= 4 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-                if (this.contactButton) {
-                    this.contactButton.className = "button";
+                // ----- EXPERIENCE BUTTON -----
+                // ----- CONTACT BUTTON -----
+                if (parentElement.scrollLeft + parentElement.clientWidth <= 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
+                    parentElement.scrollLeft + parentElement.clientWidth >= 4 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+                    if (this.contactButton) {
+                        this.contactButton.className = "button";
+                    }
                 }
-            }
-            if (parentElement.scrollLeft + parentElement.clientWidth > 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
-                parentElement.scrollLeft + parentElement.clientWidth < 4 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-                if (this.contactButton) {
-                    this.contactButton.className = "hover-copy";
-                    this.router.navigate(['/contact']);
+                if (parentElement.scrollLeft + parentElement.clientWidth > 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
+                    parentElement.scrollLeft + parentElement.clientWidth < 4 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+                    if (this.contactButton) {
+                        this.contactButton.className = "hover-copy";
+                        this.router.navigate(['/contact']);
+                    }
                 }
-            }
-            // ----- CONTACT BUTTON -----
-            // ------------- HIGHLIGHT BUTTONS --------------------------------
-            if (!this.ended && this.viewsService.getIndex() < 3 && parentElement.scrollLeft + parentElement.clientWidth >= this.totalWidth) {
-                this.loadComponent();
-                if (this.viewsService.itemEnded())
-                    this.ended = true;
-            }
-            else if (parentElement.scrollLeft <= this.totalWidth - 2 * (parentElement.clientWidth - 1)) {
-                this.removeComponent();
-                this.ended = false;
+                // ----- CONTACT BUTTON -----
+                // ------------- HIGHLIGHT BUTTONS --------------------------------
+                if (!this.ended && this.viewsService.getIndex() < 3 && parentElement.scrollLeft + parentElement.clientWidth >= this.totalWidth) {
+                    this.loadComponent();
+                    if (this.viewsService.itemEnded())
+                        this.ended = true;
+                }
+                else if (parentElement.scrollLeft <= this.totalWidth - 2 * (parentElement.clientWidth - 1)) {
+                    this.removeComponent();
+                    this.ended = false;
+                }
             }
         }
         event.preventDefault();
@@ -646,87 +657,129 @@ class AppComponent {
         }
     }
     onSwipeLeft(event) {
-        let width = window.innerWidth;
-        let parentElement = event.target;
-        let loadedEvents = this.viewsService.getIndex();
-        while (parentElement != null && parentElement.parentElement != null) {
-            parentElement = parentElement.parentElement;
+        if (this.smartphoneVersion) {
+            this.smartphoneNavi(1);
         }
-        if (parentElement.scrollLeft < width) {
-            if (loadedEvents < 1) {
-                this.loadComponent();
+        else {
+            let width = window.innerWidth;
+            let parentElement = event.target;
+            let loadedEvents = this.viewsService.getIndex();
+            while (parentElement != null && parentElement.parentElement != null) {
+                parentElement = parentElement.parentElement;
             }
-            window.setTimeout(() => { this.router.navigate(['/about-me']); }, 110);
-            for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
-                window.setTimeout(() => {
-                    parentElement.scrollLeft = i;
-                }, 100);
+            if (parentElement.scrollLeft < width) {
+                if (loadedEvents < 1) {
+                    this.loadComponent();
+                }
+                window.setTimeout(() => { this.router.navigate(['/about-me']); }, 110);
+                for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
+                    window.setTimeout(() => {
+                        parentElement.scrollLeft = i;
+                    }, 100);
+                }
             }
-        }
-        else if (parentElement.scrollLeft >= width && parentElement.scrollLeft < 2 * width) {
-            if (loadedEvents < 2) {
-                this.loadComponent();
+            else if (parentElement.scrollLeft >= width && parentElement.scrollLeft < 2 * width) {
+                if (loadedEvents < 2) {
+                    this.loadComponent();
+                }
+                window.setTimeout(() => { this.router.navigate(['/experience']); }, 110);
+                for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
+                    window.setTimeout(() => {
+                        parentElement.scrollLeft = i;
+                    }, 100);
+                }
             }
-            window.setTimeout(() => { this.router.navigate(['/experience']); }, 110);
-            for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
-                window.setTimeout(() => {
-                    parentElement.scrollLeft = i;
-                }, 100);
-            }
-        }
-        else if (parentElement.scrollLeft >= 2 * width && parentElement.scrollLeft < 3 * width) {
-            if (loadedEvents < 3) {
-                this.loadComponent();
-            }
-            window.setTimeout(() => { this.router.navigate(['/contact']); }, 110);
-            for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
-                window.setTimeout(() => {
-                    parentElement.scrollLeft = i;
-                }, 100);
+            else if (parentElement.scrollLeft >= 2 * width && parentElement.scrollLeft < 3 * width) {
+                if (loadedEvents < 3) {
+                    this.loadComponent();
+                }
+                window.setTimeout(() => { this.router.navigate(['/contact']); }, 110);
+                for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
+                    window.setTimeout(() => {
+                        parentElement.scrollLeft = i;
+                    }, 100);
+                }
             }
         }
     }
     onSwipeRight(event) {
-        let width = window.innerWidth;
-        let parentElement = event.target;
-        let loadedEvents = this.viewsService.getIndex();
-        while (parentElement != null && parentElement.parentElement != null) {
-            parentElement = parentElement.parentElement;
+        if (this.smartphoneVersion) {
+            this.smartphoneNavi(-1);
         }
-        if (parentElement.scrollLeft >= width && parentElement.scrollLeft < 2 * width) {
-            window.setTimeout(() => { this.router.navigate(['/home']); }, 190);
-            let accumulated = 0;
-            for (let i = parentElement.scrollLeft; i >= 0; i = i - 0.5) {
-                accumulated += 0.5;
-                if (accumulated / width == 1 && accumulated > 0) {
-                    accumulated = 0;
-                    window.setTimeout(() => { this.removeComponent(); }, 150);
+        else {
+            let width = window.innerWidth;
+            let parentElement = event.target;
+            let loadedEvents = this.viewsService.getIndex();
+            while (parentElement != null && parentElement.parentElement != null) {
+                parentElement = parentElement.parentElement;
+            }
+            if (parentElement.scrollLeft >= width && parentElement.scrollLeft < 2 * width) {
+                window.setTimeout(() => { this.router.navigate(['/home']); }, 190);
+                let accumulated = 0;
+                for (let i = parentElement.scrollLeft; i >= 0; i = i - 0.5) {
+                    accumulated += 0.5;
+                    if (accumulated / width == 1 && accumulated > 0) {
+                        accumulated = 0;
+                        window.setTimeout(() => { this.removeComponent(); }, 150);
+                    }
+                    window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
                 }
-                window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+            }
+            else if (parentElement.scrollLeft >= 2 * width && parentElement.scrollLeft < 3 * width) {
+                window.setTimeout(() => { this.router.navigate(['/about-me']); }, 190);
+                let accumulated = 0;
+                for (let i = parentElement.scrollLeft; i >= width; i = i - 0.5) {
+                    accumulated += 0.5;
+                    if (accumulated / width == 1 && accumulated > 0) {
+                        accumulated = 0;
+                        window.setTimeout(() => { this.removeComponent(); }, 150);
+                    }
+                    window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                }
+            }
+            else if (parentElement.scrollLeft >= 3 * width && parentElement.scrollLeft < 4 * width) {
+                window.setTimeout(() => { this.router.navigate(['/experience']); }, 190);
+                let accumulated = 0;
+                for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 0.5) {
+                    accumulated += 0.5;
+                    if (accumulated / width == 1 && accumulated > 0) {
+                        accumulated = 0;
+                        window.setTimeout(() => { this.removeComponent(); }, 150);
+                    }
+                    window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+                }
             }
         }
-        else if (parentElement.scrollLeft >= 2 * width && parentElement.scrollLeft < 3 * width) {
-            window.setTimeout(() => { this.router.navigate(['/about-me']); }, 190);
-            let accumulated = 0;
-            for (let i = parentElement.scrollLeft; i >= width; i = i - 0.5) {
-                accumulated += 0.5;
-                if (accumulated / width == 1 && accumulated > 0) {
-                    accumulated = 0;
-                    window.setTimeout(() => { this.removeComponent(); }, 150);
-                }
-                window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+    }
+    smartphoneNavi(delta) {
+        let rightMove = false;
+        if (delta > 0) {
+            rightMove = true;
+        }
+        if (this.homeButton.className == 'hover-copy') {
+            if (rightMove) {
+                this.router.navigate(['/about-me']);
             }
         }
-        else if (parentElement.scrollLeft >= 3 * width && parentElement.scrollLeft < 4 * width) {
-            window.setTimeout(() => { this.router.navigate(['/experience']); }, 190);
-            let accumulated = 0;
-            for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 0.5) {
-                accumulated += 0.5;
-                if (accumulated / width == 1 && accumulated > 0) {
-                    accumulated = 0;
-                    window.setTimeout(() => { this.removeComponent(); }, 150);
-                }
-                window.setTimeout(() => { parentElement.scrollLeft = i; }, 100);
+        else if (this.aboutMeButton.className == 'hover-copy') {
+            if (rightMove) {
+                this.router.navigate(['/experience']);
+            }
+            else {
+                this.router.navigate(['/home']);
+            }
+        }
+        else if (this.experienceButton.className == 'hover-copy') {
+            if (rightMove) {
+                this.router.navigate(['/contact']);
+            }
+            else {
+                this.router.navigate(['/about-me']);
+            }
+        }
+        else if (this.contactButton.className == 'hover-copy') {
+            if (!rightMove) {
+                this.router.navigate(['/experience']);
             }
         }
     }
@@ -737,7 +790,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
     } if (rf & 2) {
         let _t;
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.anchorHost = _t.first);
-    } }, inputs: { views: "views", viewsService: "viewsService" }, decls: 5, vars: 0, consts: [["id", "main", 1, "main", 3, "wheel", "resize", "swipeleft", "swiperight"], [3, "loadComponent", "removeComponent"], ["anchorHost", ""], [3, "activate"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+    } }, inputs: { views: "views", viewsService: "viewsService" }, decls: 5, vars: 0, consts: [["id", "main", 1, "main", 3, "wheel", "resize", "swipeleft", "swiperight"], [3, "loadComponent", "removeComponent"], ["anchorHost", ""], ["draggable", "true", 3, "activate"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("wheel", function AppComponent_Template_div_wheel_0_listener($event) { return ctx.onWheel($event); })("resize", function AppComponent_Template_div_resize_0_listener() { return ctx.onResize(); }, false, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresolveWindow"])("swipeleft", function AppComponent_Template_div_swipeleft_0_listener($event) { return ctx.onSwipeLeft($event); })("swiperight", function AppComponent_Template_div_swiperight_0_listener($event) { return ctx.onSwipeRight($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "app-header", 1);
@@ -749,7 +802,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](4, "app-scroll-arrow");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } }, directives: [_header_header_component__WEBPACK_IMPORTED_MODULE_5__["HeaderComponent"], _anchor_directive__WEBPACK_IMPORTED_MODULE_1__["AnchorDirective"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterOutlet"], _scroll_arrow_scroll_arrow_component__WEBPACK_IMPORTED_MODULE_6__["ScrollArrowComponent"]], styles: [".main[_ngcontent-%COMP%] {\r\n  background-color: lightgray;\r\n  height: 100vh;\r\n  display: inline-flex;\r\n}\r\n\r\n.main-blur[_ngcontent-%COMP%] {\r\n  color: lightgray;\r\n  height: 100vh;\r\n  display: inline-flex;\r\n  filter: blur(8px);\r\n  -webkit-filter: blur(8px);\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsMkJBQTJCO0VBQzNCLGFBQWE7RUFDYixvQkFBb0I7QUFDdEI7O0FBRUE7RUFDRSxnQkFBZ0I7RUFDaEIsYUFBYTtFQUNiLG9CQUFvQjtFQUNwQixpQkFBaUI7RUFDakIseUJBQXlCO0FBQzNCIiwiZmlsZSI6ImFwcC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLm1haW4ge1xyXG4gIGJhY2tncm91bmQtY29sb3I6IGxpZ2h0Z3JheTtcclxuICBoZWlnaHQ6IDEwMHZoO1xyXG4gIGRpc3BsYXk6IGlubGluZS1mbGV4O1xyXG59XHJcblxyXG4ubWFpbi1ibHVyIHtcclxuICBjb2xvcjogbGlnaHRncmF5O1xyXG4gIGhlaWdodDogMTAwdmg7XHJcbiAgZGlzcGxheTogaW5saW5lLWZsZXg7XHJcbiAgZmlsdGVyOiBibHVyKDhweCk7XHJcbiAgLXdlYmtpdC1maWx0ZXI6IGJsdXIoOHB4KTtcclxufSJdfQ== */"] });
+    } }, directives: [_header_header_component__WEBPACK_IMPORTED_MODULE_5__["HeaderComponent"], _anchor_directive__WEBPACK_IMPORTED_MODULE_1__["AnchorDirective"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterOutlet"], _scroll_arrow_scroll_arrow_component__WEBPACK_IMPORTED_MODULE_6__["ScrollArrowComponent"]], styles: [".main[_ngcontent-%COMP%] {\r\n  background-color: lightgray;\r\n  height: 100vh;\r\n  display: inline-flex;\r\n}\r\n\r\n.main-blur[_ngcontent-%COMP%] {\r\n  color: lightgray;\r\n  height: 100vh;\r\n  display: inline-flex;\r\n  filter: blur(0px);\r\n  -webkit-filter: blur(0px);\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsMkJBQTJCO0VBQzNCLGFBQWE7RUFDYixvQkFBb0I7QUFDdEI7O0FBRUE7RUFDRSxnQkFBZ0I7RUFDaEIsYUFBYTtFQUNiLG9CQUFvQjtFQUNwQixpQkFBaUI7RUFDakIseUJBQXlCO0FBQzNCIiwiZmlsZSI6ImFwcC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLm1haW4ge1xyXG4gIGJhY2tncm91bmQtY29sb3I6IGxpZ2h0Z3JheTtcclxuICBoZWlnaHQ6IDEwMHZoO1xyXG4gIGRpc3BsYXk6IGlubGluZS1mbGV4O1xyXG59XHJcblxyXG4ubWFpbi1ibHVyIHtcclxuICBjb2xvcjogbGlnaHRncmF5O1xyXG4gIGhlaWdodDogMTAwdmg7XHJcbiAgZGlzcGxheTogaW5saW5lLWZsZXg7XHJcbiAgZmlsdGVyOiBibHVyKDBweCk7XHJcbiAgLXdlYmtpdC1maWx0ZXI6IGJsdXIoMHB4KTtcclxufSJdfQ== */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{

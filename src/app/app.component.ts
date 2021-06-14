@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
   scrollLeftVal = -1;
   ended = false;
   pagesLoaded = 1;
+  smartphoneVersion = false;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private service: ViewsService, private router: Router, private location: Location) {
     this.views = service.getViews();
@@ -49,6 +50,10 @@ export class AppComponent implements OnInit {
     if (mainElement != null && currWidth != null) {
       mainElement.style.width = currWidth + 1 + "px";
       this.clientWidth = currWidth;
+
+      if (currWidth < 900) {
+        this.smartphoneVersion = true;
+      }
     }
 
     let homeButton = document.getElementById("home");
@@ -79,112 +84,118 @@ export class AppComponent implements OnInit {
 
   loadComponent(): void {
     console.log("loadComponent");
-    this.currentIndex = this.viewsService.getIndex();
-    const anchorItem = this.views[this.currentIndex];
-    this.viewsService.increaseIndex();
+    if (!this.smartphoneVersion) {
+      this.currentIndex = this.viewsService.getIndex();
+      const anchorItem = this.views[this.currentIndex];
+      this.viewsService.increaseIndex();
 
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(anchorItem.component);
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(anchorItem.component);
 
-    const viewContainerRef = this.anchorHost.viewContainerRef;
-    this.containerRef = viewContainerRef;
+      const viewContainerRef = this.anchorHost.viewContainerRef;
+      this.containerRef = viewContainerRef;
 
-    const componentRef = viewContainerRef.createComponent<AnchorComponent>(componentFactory);
-    this.componentRef = componentRef;
-    componentRef.instance.data = anchorItem.data;
+      const componentRef = viewContainerRef.createComponent<AnchorComponent>(componentFactory);
+      this.componentRef = componentRef;
+      componentRef.instance.data = anchorItem.data;
 
-    this.totalWidth += this.clientWidth-1;
+      this.totalWidth += this.clientWidth-1;
 
-    this.pagesLoaded++;
+      this.pagesLoaded++;
+    }
   }
 
   onWheel(event: WheelEvent): void {
-    let parentElement = (<Element>event.target);
+    if (this.smartphoneVersion) {
+      this.smartphoneNavi(event.deltaY);
+    } else {
+      let parentElement = (<Element>event.target);
 
-    while (parentElement != null && parentElement.parentElement != null) {
-      parentElement = parentElement.parentElement;
-    }
-
-    if (parentElement != null) {
-      let delta: number; 
-      this.clientWidth == null ? delta = 50 : delta = this.clientWidth/15;
-      event.deltaY > 0 ? parentElement.scrollLeft += event.deltaY + delta : parentElement.scrollLeft += event.deltaY - 1 * delta;
-
-      this.scrollLeftVal = parentElement.scrollLeft;
-
-      // ------------- HIGHLIGHT BUTTONS --------------------------------
-      // ----- HOME BUTTON -----
-      if (parentElement.scrollLeft + parentElement.clientWidth >= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-        if (this.homeButton) {
-          this.homeButton.className = "button";
-        }
+      while (parentElement != null && parentElement.parentElement != null) {
+        parentElement = parentElement.parentElement;
       }
 
-      if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-        if (this.homeButton) {
-          this.homeButton.className = "hover-copy";
-          this.router.navigate(['/home']);
-        }
-      }
-      // ----- HOME BUTTON -----
-      // ----- ABOUT ME BUTTON -----
-      if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
-        parentElement.scrollLeft + parentElement.clientWidth >= 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-        if (this.aboutMeButton) {
-          this.aboutMeButton.className = "button";
-        }
-      }
+      if (parentElement != null) {
+        let delta: number; 
+        this.clientWidth == null ? delta = 50 : delta = this.clientWidth/15;
+        event.deltaY > 0 ? parentElement.scrollLeft += event.deltaY + delta : parentElement.scrollLeft += event.deltaY - 1 * delta;
 
-      if (parentElement.scrollLeft + parentElement.clientWidth > parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
-          parentElement.scrollLeft + parentElement.clientWidth < 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-        if (this.aboutMeButton) {
-          this.aboutMeButton.className = "hover-copy";
-          this.router.navigate(['/about-me']);
-        }
-      }
-      // ----- ABOUT ME BUTTON -----
-      // ----- EXPERIENCE BUTTON -----
-      if (parentElement.scrollLeft + parentElement.clientWidth <= 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
-        parentElement.scrollLeft + parentElement.clientWidth >= 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-        if (this.experienceButton) {
-          this.experienceButton.className = "button";
-        }
-      }
+        this.scrollLeftVal = parentElement.scrollLeft;
 
-      if (parentElement.scrollLeft + parentElement.clientWidth > 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
-          parentElement.scrollLeft + parentElement.clientWidth < 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-        if (this.experienceButton) {
-          this.experienceButton.className = "hover-copy";
-          this.router.navigate(['/experience']);
+        // ------------- HIGHLIGHT BUTTONS --------------------------------
+        // ----- HOME BUTTON -----
+        if (parentElement.scrollLeft + parentElement.clientWidth >= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+          if (this.homeButton) {
+            this.homeButton.className = "button";
+          }
         }
-      }
-      // ----- EXPERIENCE BUTTON -----
-      // ----- CONTACT BUTTON -----
-      if (parentElement.scrollLeft + parentElement.clientWidth <= 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
-        parentElement.scrollLeft + parentElement.clientWidth >= 4 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-        if (this.contactButton) {
-          this.contactButton.className = "button";
+
+        if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+          if (this.homeButton) {
+            this.homeButton.className = "hover-copy";
+            this.router.navigate(['/home']);
+          }
         }
-      }
-
-      if (parentElement.scrollLeft + parentElement.clientWidth > 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
-          parentElement.scrollLeft + parentElement.clientWidth < 4 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
-        if (this.contactButton) {
-          this.contactButton.className = "hover-copy";
-          this.router.navigate(['/contact']);
+        // ----- HOME BUTTON -----
+        // ----- ABOUT ME BUTTON -----
+        if (parentElement.scrollLeft + parentElement.clientWidth <= parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
+          parentElement.scrollLeft + parentElement.clientWidth >= 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+          if (this.aboutMeButton) {
+            this.aboutMeButton.className = "button";
+          }
         }
-      }
-      // ----- CONTACT BUTTON -----
-      // ------------- HIGHLIGHT BUTTONS --------------------------------
 
-      if (!this.ended && this.viewsService.getIndex() < 3 && parentElement.scrollLeft + parentElement.clientWidth >= this.totalWidth) {
-        this.loadComponent();
+        if (parentElement.scrollLeft + parentElement.clientWidth > parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
+            parentElement.scrollLeft + parentElement.clientWidth < 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+          if (this.aboutMeButton) {
+            this.aboutMeButton.className = "hover-copy";
+            this.router.navigate(['/about-me']);
+          }
+        }
+        // ----- ABOUT ME BUTTON -----
+        // ----- EXPERIENCE BUTTON -----
+        if (parentElement.scrollLeft + parentElement.clientWidth <= 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
+          parentElement.scrollLeft + parentElement.clientWidth >= 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+          if (this.experienceButton) {
+            this.experienceButton.className = "button";
+          }
+        }
 
-        if (this.viewsService.itemEnded()) 
-          this.ended = true;
+        if (parentElement.scrollLeft + parentElement.clientWidth > 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
+            parentElement.scrollLeft + parentElement.clientWidth < 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+          if (this.experienceButton) {
+            this.experienceButton.className = "hover-copy";
+            this.router.navigate(['/experience']);
+          }
+        }
+        // ----- EXPERIENCE BUTTON -----
+        // ----- CONTACT BUTTON -----
+        if (parentElement.scrollLeft + parentElement.clientWidth <= 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) ||
+          parentElement.scrollLeft + parentElement.clientWidth >= 4 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+          if (this.contactButton) {
+            this.contactButton.className = "button";
+          }
+        }
 
-      } else if (parentElement.scrollLeft <= this.totalWidth - 2 * (parentElement.clientWidth - 1)){
-        this.removeComponent();
-        this.ended = false;
+        if (parentElement.scrollLeft + parentElement.clientWidth > 3 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth) &&
+            parentElement.scrollLeft + parentElement.clientWidth < 4 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
+          if (this.contactButton) {
+            this.contactButton.className = "hover-copy";
+            this.router.navigate(['/contact']);
+          }
+        }
+        // ----- CONTACT BUTTON -----
+        // ------------- HIGHLIGHT BUTTONS --------------------------------
+
+        if (!this.ended && this.viewsService.getIndex() < 3 && parentElement.scrollLeft + parentElement.clientWidth >= this.totalWidth) {
+          this.loadComponent();
+
+          if (this.viewsService.itemEnded()) 
+            this.ended = true;
+
+        } else if (parentElement.scrollLeft <= this.totalWidth - 2 * (parentElement.clientWidth - 1)){
+          this.removeComponent();
+          this.ended = false;
+        }
       }
     }
     event.preventDefault();
@@ -234,103 +245,141 @@ export class AppComponent implements OnInit {
   }
 
   onSwipeLeft(event: any): void {
-    let width = window.innerWidth;
-    let parentElement = (<Element>event.target);
-    let loadedEvents = this.viewsService.getIndex();
+    if (this.smartphoneVersion) {
+      this.smartphoneNavi(1);
+    } else {
+      let width = window.innerWidth;
+      let parentElement = (<Element>event.target);
+      let loadedEvents = this.viewsService.getIndex();
 
-    while (parentElement != null && parentElement.parentElement != null) {
-      parentElement = parentElement.parentElement;
-    }
-
-    if (parentElement.scrollLeft < width) {
-      if (loadedEvents < 1) {
-        this.loadComponent();
+      while (parentElement != null && parentElement.parentElement != null) {
+        parentElement = parentElement.parentElement;
       }
 
-      window.setTimeout(() => {this.router.navigate(['/about-me']);}, 110);
+      if (parentElement.scrollLeft < width) {
+        if (loadedEvents < 1) {
+          this.loadComponent();
+        }
 
-      for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
-        window.setTimeout(() => {
-          parentElement.scrollLeft = i;
-        }, 100);
-      }
-    } else if(parentElement.scrollLeft >= width && parentElement.scrollLeft < 2 * width) {
-      if (loadedEvents < 2) {
-        this.loadComponent();
-      }
+        window.setTimeout(() => {this.router.navigate(['/about-me']);}, 110);
 
-      window.setTimeout(() => {this.router.navigate(['/experience']);}, 110);
+        for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
+          window.setTimeout(() => {
+            parentElement.scrollLeft = i;
+          }, 100);
+        }
+      } else if(parentElement.scrollLeft >= width && parentElement.scrollLeft < 2 * width) {
+        if (loadedEvents < 2) {
+          this.loadComponent();
+        }
 
-      for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
-        window.setTimeout(() => {
-          parentElement.scrollLeft = i;
-        }, 100);
-      }
-    } else if(parentElement.scrollLeft >= 2 * width && parentElement.scrollLeft < 3 * width) {
-      if (loadedEvents < 3) {
-        this.loadComponent();
-      }
+        window.setTimeout(() => {this.router.navigate(['/experience']);}, 110);
 
-      window.setTimeout(() => {this.router.navigate(['/contact']);}, 110);
+        for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
+          window.setTimeout(() => {
+            parentElement.scrollLeft = i;
+          }, 100);
+        }
+      } else if(parentElement.scrollLeft >= 2 * width && parentElement.scrollLeft < 3 * width) {
+        if (loadedEvents < 3) {
+          this.loadComponent();
+        }
 
-      for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
-        window.setTimeout(() => {
-          parentElement.scrollLeft = i;
-        }, 100);
+        window.setTimeout(() => {this.router.navigate(['/contact']);}, 110);
+
+        for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
+          window.setTimeout(() => {
+            parentElement.scrollLeft = i;
+          }, 100);
+        }
       }
     }
   }
 
   onSwipeRight(event: any): void {
-    let width = window.innerWidth;
-    let parentElement = (<Element>event.target);
-    let loadedEvents = this.viewsService.getIndex();
+    if (this.smartphoneVersion) {
+      this.smartphoneNavi(-1);
+    } else {
+      let width = window.innerWidth;
+      let parentElement = (<Element>event.target);
+      let loadedEvents = this.viewsService.getIndex();
 
-    while (parentElement != null && parentElement.parentElement != null) {
-      parentElement = parentElement.parentElement;
+      while (parentElement != null && parentElement.parentElement != null) {
+        parentElement = parentElement.parentElement;
+      }
+
+      if (parentElement.scrollLeft >= width && parentElement.scrollLeft < 2 * width) {
+        window.setTimeout(() => {this.router.navigate(['/home']);}, 190);
+
+        let accumulated = 0;
+        for (let i = parentElement.scrollLeft; i >= 0; i = i - 0.5) {
+          accumulated += 0.5;
+
+          if (accumulated / width == 1 && accumulated > 0) {
+            accumulated = 0;
+            window.setTimeout(() =>{this.removeComponent();}, 150);
+          }
+
+          window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+        }
+      } else if (parentElement.scrollLeft >= 2 * width && parentElement.scrollLeft < 3 * width) {
+        window.setTimeout(() => {this.router.navigate(['/about-me']);}, 190);
+
+        let accumulated = 0;
+        for (let i = parentElement.scrollLeft; i >= width; i = i - 0.5) {
+          accumulated += 0.5;
+
+          if (accumulated / width == 1 && accumulated > 0) {
+            accumulated = 0;
+            window.setTimeout(() =>{this.removeComponent();}, 150);
+          }
+
+          window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+        }
+      } else if (parentElement.scrollLeft >= 3 * width && parentElement.scrollLeft < 4 * width) {
+        window.setTimeout(() => {this.router.navigate(['/experience']);}, 190);
+
+        let accumulated = 0;
+        for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 0.5) {
+          accumulated += 0.5;
+
+          if (accumulated / width == 1 && accumulated > 0) {
+            accumulated = 0;
+            window.setTimeout(() =>{this.removeComponent();}, 150);
+          }
+
+          window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+        }
+      }
+    }
+  }
+
+  smartphoneNavi(delta: number): void {
+    let rightMove = false;
+
+    if (delta > 0) {
+      rightMove = true;
     }
 
-    if (parentElement.scrollLeft >= width && parentElement.scrollLeft < 2 * width) {
-      window.setTimeout(() => {this.router.navigate(['/home']);}, 190);
-
-      let accumulated = 0;
-      for (let i = parentElement.scrollLeft; i >= 0; i = i - 0.5) {
-        accumulated += 0.5;
-
-        if (accumulated / width == 1 && accumulated > 0) {
-          accumulated = 0;
-          window.setTimeout(() =>{this.removeComponent();}, 150);
-        }
-
-        window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+    if (this.homeButton.className == 'hover-copy') {
+      if (rightMove) {
+        this.router.navigate(['/about-me']);
       }
-    } else if (parentElement.scrollLeft >= 2 * width && parentElement.scrollLeft < 3 * width) {
-      window.setTimeout(() => {this.router.navigate(['/about-me']);}, 190);
-
-      let accumulated = 0;
-      for (let i = parentElement.scrollLeft; i >= width; i = i - 0.5) {
-        accumulated += 0.5;
-
-        if (accumulated / width == 1 && accumulated > 0) {
-          accumulated = 0;
-          window.setTimeout(() =>{this.removeComponent();}, 150);
-        }
-
-        window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+    } else if (this.aboutMeButton.className == 'hover-copy') {
+      if (rightMove) {
+        this.router.navigate(['/experience']);
+      } else {
+        this.router.navigate(['/home']);
       }
-    } else if (parentElement.scrollLeft >= 3 * width && parentElement.scrollLeft < 4 * width) {
-      window.setTimeout(() => {this.router.navigate(['/experience']);}, 190);
-
-      let accumulated = 0;
-      for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 0.5) {
-        accumulated += 0.5;
-
-        if (accumulated / width == 1 && accumulated > 0) {
-          accumulated = 0;
-          window.setTimeout(() =>{this.removeComponent();}, 150);
-        }
-
-        window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+    } else if (this.experienceButton.className == 'hover-copy') {
+      if (rightMove) {
+        this.router.navigate(['/contact']);
+      } else {
+        this.router.navigate(['/about-me']);
+      }
+    } else if (this.contactButton.className == 'hover-copy') {
+      if (!rightMove) {
+        this.router.navigate(['/experience']);
       }
     }
   }
