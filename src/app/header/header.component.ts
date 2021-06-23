@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
       this.homeButton = homeButton;
     }
 
-    let aboutMeButton = document.getElementById("about-me");
+    let aboutMeButton = document.getElementById("about");
 
     if (aboutMeButton != null) {
       this.aboutMeButton = aboutMeButton;
@@ -95,7 +95,7 @@ export class HeaderComponent implements OnInit {
         }
         break;
       }
-      case 'about-me': {
+      case 'about': {
         if (this.homeButton && this.aboutMeButton && this.experienceButton && this.contactButton) {
           this.homeButton.className = "button";
           this.aboutMeButton.className = "hover-copy";

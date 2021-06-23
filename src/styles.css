@@ -24,6 +24,6 @@ html {
 
 p {
   color: #363945;
-  font-size: 2vh;
+  font-size: max(2vh, 16px);
   margin-bottom: 3vh;
 }

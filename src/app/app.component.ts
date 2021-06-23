@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
 
   loadThreshold = 0.1;
   totalWidth = 0;
-  scrollLeftVal = -1;
   ended = false;
   pagesLoaded = 1;
   smartphoneVersion = false;
@@ -63,7 +62,7 @@ export class AppComponent implements OnInit {
       this.homeButton = homeButton;
     }
 
-    let aboutMeButton = document.getElementById("about-me");
+    let aboutMeButton = document.getElementById("about");
 
     if (aboutMeButton != null) {
       this.aboutMeButton = aboutMeButton;
@@ -83,7 +82,6 @@ export class AppComponent implements OnInit {
   }
 
   loadComponent(): void {
-    console.log("loadComponent");
     if (!this.smartphoneVersion) {
       this.currentIndex = this.viewsService.getIndex();
       const anchorItem = this.views[this.currentIndex];
@@ -115,11 +113,9 @@ export class AppComponent implements OnInit {
       }
 
       if (parentElement != null) {
-        let delta: number; 
+        let delta: number;
         this.clientWidth == null ? delta = 50 : delta = this.clientWidth/15;
         event.deltaY > 0 ? parentElement.scrollLeft += event.deltaY + delta : parentElement.scrollLeft += event.deltaY - 1 * delta;
-
-        this.scrollLeftVal = parentElement.scrollLeft;
 
         // ------------- HIGHLIGHT BUTTONS --------------------------------
         // ----- HOME BUTTON -----
@@ -148,7 +144,7 @@ export class AppComponent implements OnInit {
             parentElement.scrollLeft + parentElement.clientWidth < 2 * parentElement.clientWidth + (this.loadThreshold * parentElement.clientWidth)) {
           if (this.aboutMeButton) {
             this.aboutMeButton.className = "hover-copy";
-            this.router.navigate(['/about-me']);
+            this.router.navigate(['/about']);
           }
         }
         // ----- ABOUT ME BUTTON -----
@@ -216,6 +212,12 @@ export class AppComponent implements OnInit {
   onResize(): void {
     this.clientWidth = window.innerWidth;
     this.totalWidth = this.pagesLoaded * (window.innerWidth - 1);
+
+    if (window.innerWidth < 900) {
+      this.smartphoneVersion = true;
+    } else {
+      this.smartphoneVersion = false;
+    }
   }
 
   onActivate(event: Event): void {
@@ -223,7 +225,7 @@ export class AppComponent implements OnInit {
     let loadedComponents = this.viewsService.getIndex();
 
     switch (url) {
-      case '/about-me': {
+      case '/about': {
         this.loadNComponents(1 - loadedComponents);
         break;
       }
@@ -245,23 +247,26 @@ export class AppComponent implements OnInit {
   }
 
   onSwipeLeft(event: any): void {
+    let parentElement = (<Element>event.target);
+
+    while (parentElement != null && parentElement.parentElement != null) {
+      parentElement = parentElement.parentElement;
+    }
+
+    parentElement.scrollTop = 0;
+    
     if (this.smartphoneVersion) {
       this.smartphoneNavi(1);
     } else {
       let width = window.innerWidth;
-      let parentElement = (<Element>event.target);
       let loadedEvents = this.viewsService.getIndex();
-
-      while (parentElement != null && parentElement.parentElement != null) {
-        parentElement = parentElement.parentElement;
-      }
 
       if (parentElement.scrollLeft < width) {
         if (loadedEvents < 1) {
           this.loadComponent();
         }
 
-        window.setTimeout(() => {this.router.navigate(['/about-me']);}, 110);
+        window.setTimeout(() => {this.router.navigate(['/about']);}, 110);
 
         for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
           window.setTimeout(() => {
@@ -297,17 +302,18 @@ export class AppComponent implements OnInit {
   }
 
   onSwipeRight(event: any): void {
+    let parentElement = (<Element>event.target);
+
+    while (parentElement != null && parentElement.parentElement != null) {
+      parentElement = parentElement.parentElement;
+    }
+
+    parentElement.scrollTop = 0;
+
     if (this.smartphoneVersion) {
       this.smartphoneNavi(-1);
     } else {
-      let width = window.innerWidth;
-      let parentElement = (<Element>event.target);
-      let loadedEvents = this.viewsService.getIndex();
-
-      while (parentElement != null && parentElement.parentElement != null) {
-        parentElement = parentElement.parentElement;
-      }
-
+      let width = window.innerWidth
       if (parentElement.scrollLeft >= width && parentElement.scrollLeft < 2 * width) {
         window.setTimeout(() => {this.router.navigate(['/home']);}, 190);
 
@@ -323,7 +329,7 @@ export class AppComponent implements OnInit {
           window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
         }
       } else if (parentElement.scrollLeft >= 2 * width && parentElement.scrollLeft < 3 * width) {
-        window.setTimeout(() => {this.router.navigate(['/about-me']);}, 190);
+        window.setTimeout(() => {this.router.navigate(['/about']);}, 190);
 
         let accumulated = 0;
         for (let i = parentElement.scrollLeft; i >= width; i = i - 0.5) {
@@ -354,6 +360,42 @@ export class AppComponent implements OnInit {
     }
   }
 
+  onSwipeDown(event: any): void {
+    if (this.smartphoneVersion) {
+      let parentElement = (<Element>event.target);
+
+      while (parentElement != null && parentElement.parentElement != null) {
+        parentElement = parentElement.parentElement;
+      }
+
+      if (parentElement != null) {
+        for (let i = parentElement.scrollTop; i >= parentElement.scrollTop - window.innerHeight/2; i--) {
+          window.setTimeout(() =>{
+            parentElement.scrollTop = i;
+          })
+        }
+      }
+    }
+  }
+
+  onSwipeUp(event: any): void {
+    if (this.smartphoneVersion) {
+      let parentElement = (<Element>event.target);
+
+      while (parentElement != null && parentElement.parentElement != null) {
+        parentElement = parentElement.parentElement;
+      }
+
+      if (parentElement != null) {
+        for (let i = parentElement.scrollTop; i <= parentElement.scrollTop + window.innerHeight/2; i++) {
+          window.setTimeout(() =>{
+            parentElement.scrollTop = i;
+          })
+        }
+      }
+    }
+  }
+
   smartphoneNavi(delta: number): void {
     let rightMove = false;
 
@@ -363,7 +405,7 @@ export class AppComponent implements OnInit {
 
     if (this.homeButton.className == 'hover-copy') {
       if (rightMove) {
-        this.router.navigate(['/about-me']);
+        this.router.navigate(['/about']);
       }
     } else if (this.aboutMeButton.className == 'hover-copy') {
       if (rightMove) {
@@ -375,7 +417,7 @@ export class AppComponent implements OnInit {
       if (rightMove) {
         this.router.navigate(['/contact']);
       } else {
-        this.router.navigate(['/about-me']);
+        this.router.navigate(['/about']);
       }
     } else if (this.contactButton.className == 'hover-copy') {
       if (!rightMove) {

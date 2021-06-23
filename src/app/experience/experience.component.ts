@@ -27,7 +27,7 @@ export class ExperienceComponent implements OnInit {
       this.homeButton = homeButton;
     }
 
-    let aboutMeButton = document.getElementById("about-me");
+    let aboutMeButton = document.getElementById("about");
 
     if (aboutMeButton != null) {
       this.aboutMeButton = aboutMeButton;
