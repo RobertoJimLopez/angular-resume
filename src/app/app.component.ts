@@ -360,42 +360,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-  onSwipeDown(event: any): void {
-    if (this.smartphoneVersion) {
-      let parentElement = (<Element>event.target);
-
-      while (parentElement != null && parentElement.parentElement != null) {
-        parentElement = parentElement.parentElement;
-      }
-
-      if (parentElement != null) {
-        for (let i = parentElement.scrollTop; i >= parentElement.scrollTop - window.innerHeight/2; i--) {
-          window.setTimeout(() =>{
-            parentElement.scrollTop = i;
-          })
-        }
-      }
-    }
-  }
-
-  onSwipeUp(event: any): void {
-    if (this.smartphoneVersion) {
-      let parentElement = (<Element>event.target);
-
-      while (parentElement != null && parentElement.parentElement != null) {
-        parentElement = parentElement.parentElement;
-      }
-
-      if (parentElement != null) {
-        for (let i = parentElement.scrollTop; i <= parentElement.scrollTop + window.innerHeight/2; i++) {
-          window.setTimeout(() =>{
-            parentElement.scrollTop = i;
-          })
-        }
-      }
-    }
-  }
-
   smartphoneNavi(delta: number): void {
     let rightMove = false;
 

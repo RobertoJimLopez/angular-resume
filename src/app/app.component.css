@@ -2,6 +2,7 @@
   background-color: lightgray;
   height: 100vh;
   display: inline-flex;
+  touch-action: pan-y !important;
 }
 
 .main-blur {
