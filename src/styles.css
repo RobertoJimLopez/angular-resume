@@ -27,3 +27,9 @@ p {
   font-size: max(2vh, 16px);
   margin-bottom: 3vh;
 }
+
+li {
+  color: #363945;
+  font-size: max(2vh, 16px);
+  margin-bottom: 3vh;
+}
