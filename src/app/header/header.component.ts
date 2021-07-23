@@ -68,8 +68,9 @@ export class HeaderComponent implements OnInit {
 
     if (this.mainView && !this.smartphoneVersion) {
       this.mainView.className = "main-blur";
-      console.log(this.mainView);
     }
+
+    let time = 0;
 
     switch((<HTMLTextAreaElement>event.target).id) {
       case 'home': {
@@ -81,16 +82,17 @@ export class HeaderComponent implements OnInit {
         }
 
         if (parentElement.scrollLeft > 0 && !this.smartphoneVersion) {
-          let accumulated = 0;
-          for (let i = parentElement.scrollLeft; i >= 0; i = i - 0.5) {
-            accumulated += 0.5;
+          let accumulated = 0
+          for (let i = parentElement.scrollLeft; i >= 0; i = i - 5) {
+            accumulated += 5;
 
             if (accumulated / width == 1 && accumulated > 0) {
               accumulated = 0;
-              window.setTimeout(() =>{this.removeComponent.next('removeComponent');}, 150);
+              window.setTimeout(() =>{this.removeComponent.next('removeComponent');}, time+150);
             }
 
-            window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            window.setTimeout(() => {parentElement.scrollLeft = i;}, time);
+            time+=1;
           }
         }
         break;
@@ -106,25 +108,25 @@ export class HeaderComponent implements OnInit {
         if (!this.smartphoneVersion) {
           if (parentElement.scrollLeft > width) {
             let accumulated = 0;
-            for (let i = parentElement.scrollLeft; i >= width; i = i - 0.5) {
-              accumulated += 0.5;
+            for (let i = parentElement.scrollLeft; i >= width; i = i - 5) {
+              accumulated += 5;
 
               if (accumulated / width == 1 && accumulated > 0) {
                 accumulated = 0;
-                window.setTimeout(() =>{this.removeComponent.next('removeComponent');}, 150);
+                window.setTimeout(() =>{this.removeComponent.next('removeComponent');}, time+150);
               }
 
-              window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+              window.setTimeout(() => {parentElement.scrollLeft = i;}, time);
+              time+=1;
             }
           } else {
             if (loadedEvents < 1) {
               this.loadComponent.next('loadComponent');
             }
 
-            for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
-              window.setTimeout(() => {
-                parentElement.scrollLeft = i;
-              }, 100);
+            for (let i = parentElement.scrollLeft; i <= width; i = i + 5) {
+              window.setTimeout(() => {parentElement.scrollLeft = i;}, time);
+              time+=1;
             }
           }
         }
@@ -141,15 +143,16 @@ export class HeaderComponent implements OnInit {
         if (!this.smartphoneVersion) {
           if (parentElement.scrollLeft > 2 * width) {
             let accumulated = 0;
-            for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 0.5) {
-              accumulated += 0.5;
+            for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 5) {
+              accumulated += 5;
 
               if (accumulated / width == 1 && accumulated > 0) {
                 accumulated = 0;
-                window.setTimeout(() =>{this.removeComponent.next('removeComponent');}, 150);
+                window.setTimeout(() =>{this.removeComponent.next('removeComponent');}, time+150);
               }
 
-              window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+              window.setTimeout(() => {parentElement.scrollLeft = i;}, time);
+              time+=1;
             }
           } else {
             if (loadedEvents < 2) {
@@ -158,8 +161,9 @@ export class HeaderComponent implements OnInit {
               }
             }
 
-            for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
-              window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 5) {
+              window.setTimeout(() => {parentElement.scrollLeft = i;}, time);
+              time+=1;
             }
           }
         }
@@ -175,8 +179,9 @@ export class HeaderComponent implements OnInit {
 
         if (!this.smartphoneVersion) {
           if (parentElement.scrollLeft > 3 * width) {
-            for (let i = parentElement.scrollLeft; i >= 3 * width; i = i - 0.5) {
-              window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            for (let i = parentElement.scrollLeft; i >= 3 * width; i = i - 5) {
+              window.setTimeout(() => {parentElement.scrollLeft = i;}, time);
+              time+=1;
             }
           } else {
             if (loadedEvents < 3) {
@@ -185,8 +190,9 @@ export class HeaderComponent implements OnInit {
               }
             }
 
-            for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
-              window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+            for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 5) {
+              window.setTimeout(() => {parentElement.scrollLeft = i;}, time);
+              time+=1;
             }
           }
         }
@@ -198,7 +204,8 @@ export class HeaderComponent implements OnInit {
     }
 
     if (this.mainView && !this.smartphoneVersion) {
-      window.setTimeout(() => {this.mainView.className = "main";}, 200)
+      console.log(time);
+      window.setTimeout(() => {this.mainView.className = "main";}, time)
     }
   }
 

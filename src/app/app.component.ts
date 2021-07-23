@@ -248,6 +248,7 @@ export class AppComponent implements OnInit {
 
   onSwipeLeft(event: any): void {
     let parentElement = (<Element>event.target);
+    let time = 1;
 
     while (parentElement != null && parentElement.parentElement != null) {
       parentElement = parentElement.parentElement;
@@ -261,41 +262,44 @@ export class AppComponent implements OnInit {
       let width = window.innerWidth;
       let loadedEvents = this.viewsService.getIndex();
 
-      if (parentElement.scrollLeft < width) {
-        if (loadedEvents < 1) {
+      if (parentElement.scrollLeft < width - 10) {
+          if (loadedEvents < 1) {
           this.loadComponent();
         }
 
         window.setTimeout(() => {this.router.navigate(['/about']);}, 110);
 
-        for (let i = parentElement.scrollLeft; i <= width; i = i + 0.5) {
+        for (let i = parentElement.scrollLeft; i <= width; i = i + 5) {
           window.setTimeout(() => {
             parentElement.scrollLeft = i;
-          }, 100);
+          }, time);
+          time += 1;
         }
-      } else if(parentElement.scrollLeft >= width && parentElement.scrollLeft < 2 * width) {
+      } else if(parentElement.scrollLeft >= width - 10 && parentElement.scrollLeft < 2 * width - 10) {
         if (loadedEvents < 2) {
           this.loadComponent();
         }
 
         window.setTimeout(() => {this.router.navigate(['/experience']);}, 110);
 
-        for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 0.5) {
+        for (let i = parentElement.scrollLeft; i <= 2 * width; i = i + 5) {
           window.setTimeout(() => {
             parentElement.scrollLeft = i;
-          }, 100);
+          }, time);
+          time += 1;
         }
-      } else if(parentElement.scrollLeft >= 2 * width && parentElement.scrollLeft < 3 * width) {
+      } else if(parentElement.scrollLeft >= 2 * width - 10 && parentElement.scrollLeft < 3 * width - 10) {
         if (loadedEvents < 3) {
           this.loadComponent();
         }
 
         window.setTimeout(() => {this.router.navigate(['/contact']);}, 110);
 
-        for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 0.5) {
+        for (let i = parentElement.scrollLeft; i <= 3 * width; i = i + 5) {
           window.setTimeout(() => {
             parentElement.scrollLeft = i;
-          }, 100);
+          }, time);
+          time += 1;
         }
       }
     }
@@ -303,6 +307,7 @@ export class AppComponent implements OnInit {
 
   onSwipeRight(event: any): void {
     let parentElement = (<Element>event.target);
+    let time = 1;
 
     while (parentElement != null && parentElement.parentElement != null) {
       parentElement = parentElement.parentElement;
@@ -314,47 +319,50 @@ export class AppComponent implements OnInit {
       this.smartphoneNavi(-1);
     } else {
       let width = window.innerWidth
-      if (parentElement.scrollLeft >= width && parentElement.scrollLeft < 2 * width) {
+      if (parentElement.scrollLeft < (width - 10) + width * this.loadThreshold) {
         window.setTimeout(() => {this.router.navigate(['/home']);}, 190);
 
         let accumulated = 0;
-        for (let i = parentElement.scrollLeft; i >= 0; i = i - 0.5) {
-          accumulated += 0.5;
+        for (let i = parentElement.scrollLeft; i >= 0; i = i - 5) {
+          accumulated += 5;
 
           if (accumulated / width == 1 && accumulated > 0) {
             accumulated = 0;
-            window.setTimeout(() =>{this.removeComponent();}, 150);
+            window.setTimeout(() =>{this.removeComponent();}, time + 200);
           }
 
-          window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+          window.setTimeout(() => {parentElement.scrollLeft = i;}, time);
+          time += 1;
         }
-      } else if (parentElement.scrollLeft >= 2 * width && parentElement.scrollLeft < 3 * width) {
+      } else if (parentElement.scrollLeft >= (width - 10) + width * this.loadThreshold && parentElement.scrollLeft < (2 * width - 10) + width * this.loadThreshold) {
         window.setTimeout(() => {this.router.navigate(['/about']);}, 190);
 
         let accumulated = 0;
-        for (let i = parentElement.scrollLeft; i >= width; i = i - 0.5) {
-          accumulated += 0.5;
+        for (let i = parentElement.scrollLeft; i >= width; i = i - 5) {
+          accumulated += 5;
 
           if (accumulated / width == 1 && accumulated > 0) {
             accumulated = 0;
-            window.setTimeout(() =>{this.removeComponent();}, 150);
+            window.setTimeout(() =>{this.removeComponent();}, time + 200);
           }
 
-          window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+          window.setTimeout(() => {parentElement.scrollLeft = i;}, time);
+          time += 1;
         }
-      } else if (parentElement.scrollLeft >= 3 * width && parentElement.scrollLeft < 4 * width) {
+      } else if (parentElement.scrollLeft >= (2 * width - 10) + width * this.loadThreshold && parentElement.scrollLeft < (3 * width - 10) + width * this.loadThreshold) {
         window.setTimeout(() => {this.router.navigate(['/experience']);}, 190);
 
         let accumulated = 0;
-        for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 0.5) {
-          accumulated += 0.5;
+        for (let i = parentElement.scrollLeft; i >= 2 * width; i = i - 5) {
+          accumulated += 5;
 
           if (accumulated / width == 1 && accumulated > 0) {
             accumulated = 0;
-            window.setTimeout(() =>{this.removeComponent();}, 150);
+            window.setTimeout(() =>{this.removeComponent();}, time + 200);
           }
 
-          window.setTimeout(() => {parentElement.scrollLeft = i;}, 100);
+          window.setTimeout(() => {parentElement.scrollLeft = i;}, time);
+          time += 1;
         }
       }
     }

@@ -9,6 +9,6 @@
   color: lightgray;
   height: 100vh;
   display: inline-flex;
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
+  filter: blur(16px);
+  -webkit-filter: blur(16px);
 }

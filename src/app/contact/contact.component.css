@@ -6,9 +6,9 @@
 @media only screen and (min-width: 850px) {
   .wrapper .contact {
     font-family: Barlow;
-    padding-left: 10vw;
-    padding-top: 20vh;
-    width: 30vw;
+    padding-left: 7vw;
+    padding-top: 10vw;
+    width: 40vw;
     float: left;
   }
 
@@ -27,7 +27,7 @@
   }
 
   .wrapper .contact .text {
-    width: 35vw;
+    width: 40vw;
     height: auto;
     margin-top: 7vh;
     margin-right: 10vw;

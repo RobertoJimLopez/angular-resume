@@ -6,9 +6,9 @@
 @media only screen and (min-width: 850px) {
   .wrapper .about-me {
     font-family: Barlow;
-    padding-left: 10vw;
-    padding-top: 20vh;
-    width: 30vw;
+    padding-left: 6vw;
+    padding-top: 10vw;
+    width: 40vw;
     float: left;
   }
 
@@ -27,17 +27,16 @@
   }
 
   .wrapper .about-me .text {
-    width: 35vw;
+    width: 40vw;
     height: auto;
     margin-top: 7vh;
-    margin-right: 10vw;
   }
 
   .wrapper .about-page {
     font-family: Barlow;
-    padding-left: 10vw;
-    padding-top: 20vh;
-    width: 30vw;
+    padding-left: 6vw;
+    padding-top: 10vw;
+    width: 40vw;
     float: left;
   }
 
@@ -56,10 +55,10 @@
   }
 
   .wrapper .about-page .text {
-    width: 35vw;
+    width: 40vw;
     height: auto;
     margin-top: 7vh;
-    margin-right: 10vw;
+    margin-right: 7vw;
   }
 }
 

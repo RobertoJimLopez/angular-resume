@@ -6,9 +6,9 @@
 @media only screen and (min-width: 850px) {
   .wrapper .experience {
     font-family: Barlow;
-    padding-left: 10vw;
-    padding-top: 20vh;
-    width: 30vw;
+    padding-left: 7vw;
+    padding-top: 10vw;
+    width: 40vw;
     float: left;
   }
 
@@ -27,39 +27,9 @@
   }
 
   .wrapper .experience .text {
-    width: 35vw;
+    width: 40vw;
     height: auto;
     margin-top: 7vh;
-    margin-right: 10vw;
-  }
-
-  .wrapper .about-page {
-    font-family: Barlow;
-    padding-left: 10vw;
-    padding-top: 20vh;
-    width: 30vw;
-    float: left;
-  }
-
-  .wrapper .about-page .title {
-    font-size: max(7vh, 40px);
-    color: #363945;
-    height: 7vh;
-    font-weight: 700;
-  }
-
-  .wrapper .about-page .subtitle {
-    font-size: max(2.5vh, 24px);
-    font-weight: 500;
-    color: dimgray;
-    margin-top: 1vh;
-  }
-
-  .wrapper .about-page .text {
-    width: 35vw;
-    height: auto;
-    margin-top: 7vh;
-    margin-right: 10vw;
   }
 }
 
@@ -93,39 +63,5 @@
     margin-top: 7vh;
     color: #363945;
     font-size: 16px;
-  }
-  
-  .wrapper .about-page {
-    font-family: Barlow;
-    padding-left: 10vw;
-    width: 100vw;
-    display: inline-table;
-  }
-
-  .wrapper .about-page .title {
-    font-size: 30px;
-    color: #363945;
-    height: 28px;
-    font-weight: 700;
-  }
-
-  .wrapper .about-page .subtitle {
-    font-size: 18px;
-    font-weight: 500;
-    color: dimgray;
-    margin-top: 1vh;
-  }
-
-  .wrapper .about-page .text {
-    width: 80vw;
-    height: auto;
-    margin-top: 7vh;
-    color: #363945;
-    font-size: 16px;
-  }
-
-  .wrapper .about-page .filler {
-    height: 20vh;
-    width: 100vw;
   }
 }
