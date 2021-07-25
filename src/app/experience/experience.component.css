@@ -1,0 +1,67 @@
+.wrapper {
+  width: 100vw;
+}
+
+/* Desktops and laptops ----------- */
+@media only screen and (min-width: 850px) {
+  .wrapper .experience {
+    font-family: Barlow;
+    padding-left: 7vw;
+    padding-top: 10vw;
+    width: 40vw;
+    float: left;
+  }
+
+  .wrapper .experience .title {
+    font-size: max(7vh, 40px);
+    color: #363945;
+    height: 7vh;
+    font-weight: 700;
+  }
+
+  .wrapper .experience .subtitle {
+    font-size: max(2.5vh, 24px);
+    font-weight: 500;
+    color: dimgray;
+    margin-top: 1vh;
+  }
+
+  .wrapper .experience .text {
+    width: 40vw;
+    height: auto;
+    margin-top: 7vh;
+  }
+}
+
+/* mobiles (landscape and portrait) */
+@media only screen and (max-width: 850px) {
+  .wrapper .experience {
+    font-family: Barlow;
+    padding-left: 10vw;
+    padding-top: 15vh;
+    width: 100vw;
+    display: inline-table;
+  }
+
+  .wrapper .experience .title {
+    font-size: 30px;
+    color: #363945;
+    height: 28px;
+    font-weight: 700;
+  }
+
+  .wrapper .experience .subtitle {
+    font-size: 18px;
+    font-weight: 500;
+    color: dimgray;
+    margin-top: 1vh;
+  }
+
+  .wrapper .experience .text {
+    width: 80vw;
+    height: auto;
+    margin-top: 7vh;
+    color: #363945;
+    font-size: 16px;
+  }
+}

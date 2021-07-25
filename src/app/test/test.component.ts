@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Console } from 'node:console';
 
 import { AnchorComponent } from '../anchor.component'
 

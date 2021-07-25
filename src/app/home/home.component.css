@@ -1,37 +1,57 @@
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 /* Desktops and laptops ----------- */
 @media only screen and (min-width: 850px) {
   .presentation {
     font-family: Barlow;
     padding-left: 10vw;
-    padding-top: 20vh;
-    width: 100vw;
-    display: inline-table;
+    padding-top: 10vw;
+    width: 90vw;
   }
   
   .presentation .name {
-    font-size: 7vh;
+    font-size: max(7vh, 40px);
     color: #363945;
     height: 7vh;
     font-weight: 700;
+    display: inline-block;
   }
   .presentation .subtitle {
-    font-size: 2.5vh;
+    font-size: max(2.5vh, 24px);
     font-weight: 500;
     color: dimgray;
     margin-top: 1vh;
-  }
-  
-  .presentation .subtitle .developer {
-    float: left;
-    margin-left: 10px;
+    display: block;
   }
   
   .presentation .letter {
+    float: left;
     width: 35vw;
     height: auto;
+    margin-top: 7vh;
+    margin-right: 10vw;
+  }
+
+  .presentation .letter .greetings {
+    margin-bottom: 6vh;
+  }
+
+  .presentation .letter .notice {
+    margin-top: 5vh;
+    margin-left: 30px;
+  }
+
+  .presentation .letter .logo {
+    width: 50px;
+    float: left;
+    margin-left: 30px;
+  }
+
+  .presentation .letter .tip {
     margin-top: 15vh;
-    color: #363945;
-    font-size: 2vh;
   }
   
   .tw {
@@ -62,17 +82,22 @@
     margin-top: 1vh;
   }
   
-  .presentation .subtitle .developer {
-    float: left;
-    margin-left: 10px;
-  }
-  
   .presentation .letter {
     width: 80vw;
     height: auto;
-    margin-top: 10vh;
+    margin-top: 7vh;
     color: #363945;
     font-size: 16px;
+  }
+
+  .presentation .letter .notice {
+    margin-top: 10vh;
+  }
+
+  .presentation .letter .logo {
+    width: 40px;
+    float: left;
+    margin-right: 5vw;
   }
   
   .tw {

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-portfolio": {
+    "angular-resume": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-portfolio",
+            "outputPath": "dist/angular-resume",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -25,7 +25,8 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/sitemap.xml"
             ],
             "styles": [
               "src/styles.css"
@@ -65,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-portfolio:build"
+            "browserTarget": "angular-resume:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-portfolio:build:production"
+              "browserTarget": "angular-resume:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-portfolio:build"
+            "browserTarget": "angular-resume:build"
           }
         },
         "test": {
@@ -113,11 +114,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-portfolio:serve"
+            "devServerTarget": "angular-resume:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-portfolio:serve:production"
+              "devServerTarget": "angular-resume:serve:production"
             }
           }
         },
@@ -128,7 +129,7 @@
       }
     }
   },
-  "defaultProject": "angular-portfolio",
+  "defaultProject": "angular-resume",
   "cli": {
     "analytics": false
   }

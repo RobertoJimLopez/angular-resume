@@ -16,7 +16,7 @@
     float: left;
     padding: 1vh 2vw;
     color: #363945;
-    font-size: 2.2vh;
+    font-size: max(2.2vh, 16px);
     font-family: Barlow Condensed;
     font-weight: 300;
     letter-spacing: 2px;
@@ -32,7 +32,7 @@
   .site-header .navigation .hover-copy {
     float: left;
     padding: 1vh 2vw;
-    font-size: 2.2vh;
+    font-size: max(2.2vh, 16px);
     font-family: Barlow Condensed;
     font-weight: 300;
     letter-spacing: 2px;
@@ -48,6 +48,7 @@
     width: 100vw;
     height: 7vh;
     position: fixed;
+    background-color: lightgray;
     top: 0;
   }
 
@@ -61,7 +62,7 @@
     float: left;
     padding: 1vh 2vw;
     color: #363945;
-    font-size: 2.2vh;
+    font-size: max(2.2vh, 16px);
     font-family: Barlow Condensed;
     font-weight: 300;
     letter-spacing: 2px;
@@ -77,7 +78,7 @@
   .site-header .navigation .hover-copy {
     float: left;
     padding: 1vh 2vw;
-    font-size: 2.2vh;
+    font-size: max(2.2vh, 16px);
     font-family: Barlow Condensed;
     font-weight: 300;
     letter-spacing: 2px;

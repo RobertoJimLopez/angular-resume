@@ -1,8 +1,14 @@
 <div class="main"
 id="main"
-(wheel)="onWheel($event)">
-  <app-header></app-header>
-  <app-home></app-home>
+(wheel)="onWheel($event)"
+(window:resize)="onResize()"
+(swipeleft)="onSwipeLeft($event)"
+(swiperight)="onSwipeRight($event)">
+  <app-header
+  (loadComponent)="loadComponent()"
+  (removeComponent)="removeComponent()">
+  </app-header>
   <ng-template anchorHost></ng-template>
+  <router-outlet (activate)='onActivate($event)' draggable="true"></router-outlet>
   <app-scroll-arrow></app-scroll-arrow>
 </div>

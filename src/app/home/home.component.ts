@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { element } from 'protractor';
-import Typewriter from 't-writer.js'
 
 @Component({
   selector: 'app-home',
@@ -9,33 +7,44 @@ import Typewriter from 't-writer.js'
 })
 
 export class HomeComponent implements OnInit {
+  homeButton: HTMLElement | any;
+  aboutMeButton: HTMLElement | any;
+  experienceButton: HTMLElement | any;
+  contactButton: HTMLElement | any;
 
   constructor() { }
 
   ngOnInit(): void {
-    const target = document.querySelector('.tw');
 
-    const writer = new Typewriter(target, {
-      loop: true,
-      typeSpeed: 100,
-      deleteSpeed: 100,
-      typeColor: 'dimgray'
-    })
-    
-    writer
-      .type('Backend')
-      .rest(2000)
-      .remove(7)
-      .type('JavaScript')
-      .rest(2000)
-      .remove(10)
-      .type('Node.js')
-      .rest(2000)
-      .remove(7)
-      .type('Angular')
-      .rest(2000)
-      .remove(7)
-      .clear()
-      .start()
+    let homeButton = document.getElementById("home");
+
+    if (homeButton != null) {
+      this.homeButton = homeButton;
+    }
+
+    let aboutMeButton = document.getElementById("about");
+
+    if (aboutMeButton != null) {
+      this.aboutMeButton = aboutMeButton;
+    }
+
+    let experienceButton = document.getElementById("experience");
+
+    if (experienceButton != null) {
+      this.experienceButton = experienceButton;
+    }
+
+    let contactButton = document.getElementById("contact");
+
+    if (contactButton != null) {
+      this.contactButton = contactButton;
+    }
+
+    if (this.homeButton && this.aboutMeButton && this.experienceButton && this.contactButton) {
+      this.homeButton.className = "hover-copy";
+      this.aboutMeButton.className = "button";
+      this.experienceButton.className = "button";
+      this.contactButton.className = "button";
+    }
   }
 }

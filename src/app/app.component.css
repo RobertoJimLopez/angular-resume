@@ -2,4 +2,13 @@
   background-color: lightgray;
   height: 100vh;
   display: inline-flex;
+  touch-action: pan-y !important;
+}
+
+.main-blur {
+  color: lightgray;
+  height: 100vh;
+  display: inline-flex;
+  filter: blur(16px);
+  -webkit-filter: blur(16px);
 }
