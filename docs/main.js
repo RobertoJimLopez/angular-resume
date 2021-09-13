@@ -162,7 +162,7 @@ class HomeComponent {
     }
 }
 HomeComponent.ɵfac = function HomeComponent_Factory(t) { return new (t || HomeComponent)(); };
-HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HomeComponent, selectors: [["app-home"]], decls: 18, vars: 0, consts: [[1, "presentation"], [1, "name"], [1, "subtitle"], [1, "letter"], [1, "greetings"], [1, "notice"], [1, "logo"], ["src", "./assets/images/firefox-logo.png"], ["src", "./assets/images/chrome-logo.png"]], template: function HomeComponent_Template(rf, ctx) { if (rf & 1) {
+HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HomeComponent, selectors: [["app-home"]], decls: 18, vars: 0, consts: [[1, "presentation"], [1, "name"], [1, "subtitle"], [1, "letter"], [1, "greetings"], [1, "notice"], [1, "logo"], ["src", "../../assets/images/firefox-logo.png"], ["src", "../../assets/images/chrome-logo.png"]], template: function HomeComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "Roberto Jim\u00E9nez");
@@ -1093,7 +1093,7 @@ class ContactComponent {
     }
 }
 ContactComponent.ɵfac = function ContactComponent_Factory(t) { return new (t || ContactComponent)(); };
-ContactComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ContactComponent, selectors: [["app-contact"]], decls: 26, vars: 0, consts: [[1, "wrapper"], [1, "contact"], [1, "title"], [1, "subtitle"], [1, "text"], ["href", "mailto:roberto.jimlopez@outlook.com"], ["href", "https://www.linkedin.com/in/roberto-jim%C3%A9nez-l%C3%B3pez-930301132/"], ["href", "https://www.dropbox.com/s/8agq0dqmijeby2l/CV_Roberto.pdf?dl=0"]], template: function ContactComponent_Template(rf, ctx) { if (rf & 1) {
+ContactComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ContactComponent, selectors: [["app-contact"]], decls: 26, vars: 0, consts: [[1, "wrapper"], [1, "contact"], [1, "title"], [1, "subtitle"], [1, "text"], ["href", "mailto:roberto.jimlopez@outlook.com"], ["href", "https://www.linkedin.com/in/roberto-jim%C3%A9nez-l%C3%B3pez-930301132/"], ["href", "https://www.dropbox.com/s/bh45uh7glq827n8/CV_Roberto%20EN.pdf?dl=0"]], template: function ContactComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
