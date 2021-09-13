@@ -162,7 +162,7 @@ class HomeComponent {
     }
 }
 HomeComponent.ɵfac = function HomeComponent_Factory(t) { return new (t || HomeComponent)(); };
-HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HomeComponent, selectors: [["app-home"]], decls: 18, vars: 0, consts: [[1, "presentation"], [1, "name"], [1, "subtitle"], [1, "letter"], [1, "greetings"], [1, "notice"], [1, "logo"], ["src", "../assets/images/firefox-logo.png"], ["src", "../assets/images/chrome-logo.png"]], template: function HomeComponent_Template(rf, ctx) { if (rf & 1) {
+HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HomeComponent, selectors: [["app-home"]], decls: 18, vars: 0, consts: [[1, "presentation"], [1, "name"], [1, "subtitle"], [1, "letter"], [1, "greetings"], [1, "notice"], [1, "logo"], ["src", "./assets/images/firefox-logo.png"], ["src", "./assets/images/chrome-logo.png"]], template: function HomeComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "Roberto Jim\u00E9nez");
